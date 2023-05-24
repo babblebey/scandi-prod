@@ -41,8 +41,6 @@ class ProductHandler implements ProductHandlerInterface {
         $product = $this->getInstance($productType, $productDetails);
         $productAttributeKey = key($product->getSpecialAttribute());
 
-        echo $productAttributeKey;
-
         $productQuery = $product->getInsertQuery();
         $localQuery = '
             INSERT INTO '. self::TABLE .' 
@@ -64,8 +62,6 @@ class ProductHandler implements ProductHandlerInterface {
                 'name' => $productDetails['name'],
                 'price' =>  $productDetails['price']
             ]);
-
-            echo 'Product Inserted Successully';
         } catch (\PDOExcerption $error) {
             exit("Product Insertion Error: " . $error->getMessage());
         }
