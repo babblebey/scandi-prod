@@ -3,6 +3,38 @@ namespace Src\Interfaces;
 
 interface ProductInterface {
     /**
+     * Sets Product Name
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setName($name);
+
+    /**
+     * Sets Product SKU
+     *
+     * @param string $sku
+     * @return void
+     */
+    public function setSKU($sku);
+
+    /**
+     * Sets Product Price
+     *
+     * @param int $price
+     * @return void
+     */
+    public function setPrice($price);
+
+    /**
+     * Sets Product Special Attribute (weight || size || dimension)
+     *
+     * @param int||string $attr
+     * @return void
+     */
+    public function setSpecialAttribute($attr);
+
+    /**
      * Gets Product Name
      *
      * @return string
