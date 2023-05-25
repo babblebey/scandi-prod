@@ -29,10 +29,9 @@ interface ProductHandlerInterface {
      * Adds a New Product to DB
      *
      * @param array $productDetails
-     * @param string $productType
      * @return void
      */
-    public function insert(array $productDetails, $productType);
+    public function insert(array $productDetails);
 
     /**
      * Deletes a Product from DB
