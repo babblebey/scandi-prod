@@ -36,8 +36,6 @@ class ProductHandler implements ProductHandlerInterface {
     }
 
     public function insert(array $productDetails, $productType) {
-        print_r($productType);
-
         $product = $this->getInstance($productType, $productDetails);
         $productAttributeKey = key($product->getSpecialAttribute());
 
@@ -48,20 +46,25 @@ class ProductHandler implements ProductHandlerInterface {
             VALUES
                 (:sku, :name, :price)
         ';
+
+        // LATER IMPROVEMENTS? Use extract()
         
         try {
-            $productStmt = $this->db->prepare($productQuery);
-            $productStmt->execute([
-                'sku' => $productDetails['sku'],
-                $productAttributeKey => $productDetails['attribute']
-            ]);
-
             $localStmt = $this->db->prepare($localQuery);
             $localStmt->execute([
                 'sku' => $productDetails['sku'],
                 'name' => $productDetails['name'],
                 'price' =>  $productDetails['price']
             ]);
+            
+            $productStmt = $this->db->prepare($productQuery);
+            $productStmt->execute([
+                'sku' => $productDetails['sku'],
+                $productAttributeKey => $productDetails['attribute']
+            ]);
+
+            // Debug - Remove Later
+            echo "Product Inserted Successfully!";
         } catch (\PDOExcerption $error) {
             exit("Product Insertion Error: " . $error->getMessage());
         }
