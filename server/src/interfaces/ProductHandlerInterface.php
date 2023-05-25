@@ -12,6 +12,14 @@ interface ProductHandlerInterface {
     public function getInstance($productType, array $params);
 
     /**
+     * Gets A Single Product from DB with its sku
+     *
+     * @param string $sku
+     * @return object
+     */
+    public function find($sku);
+
+    /**
      * Gets All Product from DB
      *
      * @return object
