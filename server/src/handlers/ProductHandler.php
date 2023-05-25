@@ -44,7 +44,7 @@ class ProductHandler implements ProductHandlerInterface {
             INSERT INTO '. self::TABLE .' 
                 (sku, name, price, type)
             VALUES
-                (:sku, :name, :price,type)
+                (:sku, :name, :price, :type)
         ';
 
         // LATER IMPROVEMENTS? Use extract()
