@@ -71,8 +71,9 @@ interface ProductInterface {
 
     /**
      * Gets Product SQL Query for Deleting Product from DB
-     *
+     * 
+     * @param string $table
      * @return string
      */
-    public function getDeleteQuery();
+    public function getDeleteQuery($table);
 }
