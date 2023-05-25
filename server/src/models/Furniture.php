@@ -8,6 +8,7 @@ class Furniture extends Product {
 
     private $dimensions;
     
+    // IMPROVEMENT OPTION??: Transform __construst into setters
     public function __construct($name, $sku, $price, $dimensions) {
         $this->name = $name;
         $this->sku = $sku;

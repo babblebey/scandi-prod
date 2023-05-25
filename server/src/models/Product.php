@@ -8,6 +8,7 @@ abstract class Product implements ProductInterface {
     protected $sku;
     protected $price;
 
+    // IMPROVEMENT OPTION??: Transform __construst into setters
     public function __construct($name, $sku, $price) {
         $this->name = $name;
         $this->sku = $sku;

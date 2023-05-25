@@ -8,6 +8,7 @@ class Book extends Product {
 
     private $weight;
 
+    // IMPROVEMENT OPTION??: Transform __construst into setters
     public function __construct($name, $sku, $price, $weight) {
         $this->name = $name;
         $this->sku = $sku;

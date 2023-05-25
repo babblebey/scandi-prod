@@ -8,6 +8,7 @@ class DVD extends Product {
 
     private $size;
 
+    // IMPROVEMENT OPTION??: Transform __construst into setters
     public function __construct($name, $sku, $price, $size) {
         $this->name = $name;
         $this->sku = $sku;
