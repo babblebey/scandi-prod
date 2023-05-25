@@ -6,10 +6,9 @@ interface ProductHandlerInterface {
      * Gets an Instance of the Product Class/Model with the Product Type
      *
      * @param string $productType
-     * @param array $params
      * @return object
      */
-    public function getInstance($productType, array $params);
+    public function getInstance($productType);
 
     /**
      * Gets A Single Product from DB with its sku
