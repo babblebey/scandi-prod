@@ -4,7 +4,7 @@ namespace Src\Models;
 use Src\Models\Product;
 
 class Furniture extends Product {
-    const TABLE = 'dvd';
+    const TABLE = 'furniture';
 
     private $dimensions;
     
