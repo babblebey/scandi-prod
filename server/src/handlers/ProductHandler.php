@@ -39,8 +39,8 @@ class ProductHandler implements ProductHandlerInterface {
         $product = $this->getInstance($productType, $productDetails);
         $productAttributeKey = key($product->getSpecialAttribute());
 
-        $productQuery = $product->getInsertQuery();
-        $localQuery = '
+        $productInsertQuery = $product->getInsertQuery();
+        $localInsertQuery = '
             INSERT INTO '. self::TABLE .' 
                 (sku, name, price)
             VALUES
@@ -50,15 +50,15 @@ class ProductHandler implements ProductHandlerInterface {
         // LATER IMPROVEMENTS? Use extract()
         
         try {
-            $localStmt = $this->db->prepare($localQuery);
-            $localStmt->execute([
+            $localInsertStmt = $this->db->prepare($localInsertQuery);
+            $localInsertStmt->execute([
                 'sku' => $productDetails['sku'],
                 'name' => $productDetails['name'],
                 'price' =>  $productDetails['price']
             ]);
             
-            $productStmt = $this->db->prepare($productQuery);
-            $productStmt->execute([
+            $productInsertStmt = $this->db->prepare($productInsertQuery);
+            $productInsertStmt->execute([
                 'sku' => $productDetails['sku'],
                 $productAttributeKey => $productDetails['attribute']
             ]);
