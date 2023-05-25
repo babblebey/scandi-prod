@@ -31,5 +31,5 @@ abstract class Product implements ProductInterface {
 
     abstract public function getInsertQuery();
 
-    abstract public function getDeleteQuery();
+    abstract public function getDeleteQuery($table);
 }

@@ -29,11 +29,16 @@ class Book extends Product {
         ';
     }
 
-    public function getDeleteQuery() {
+    public function getDeleteQuery($table = 'product') {
         return '
-            DELETE FROM '. self::TABLE .' 
+            DELETE 
+                Product, ThisProductType 
+            FROM '. self::TABLE .'
+            INNER JOIN '. $table .' 
+            ON 
+                ThisProductType.product_sku = Product.sku 
             WHERE 
-                product_sku = :sku
+                Product.sku = :sku
         ';
     }
 }
