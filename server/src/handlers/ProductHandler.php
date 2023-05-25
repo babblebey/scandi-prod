@@ -42,9 +42,9 @@ class ProductHandler implements ProductHandlerInterface {
         $productInsertQuery = $product->getInsertQuery();
         $localInsertQuery = '
             INSERT INTO '. self::TABLE .' 
-                (sku, name, price)
+                (sku, name, price, type)
             VALUES
-                (:sku, :name, :price)
+                (:sku, :name, :price,type)
         ';
 
         // LATER IMPROVEMENTS? Use extract()
@@ -54,7 +54,8 @@ class ProductHandler implements ProductHandlerInterface {
             $localInsertStmt->execute([
                 'sku' => $productDetails['sku'],
                 'name' => $productDetails['name'],
-                'price' =>  $productDetails['price']
+                'price' =>  $productDetails['price'],
+                'type' =>  $productType
             ]);
             
             $productInsertStmt = $this->db->prepare($productInsertQuery);
