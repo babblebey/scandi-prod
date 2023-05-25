@@ -12,9 +12,9 @@ class ProductHandler implements ProductHandlerInterface {
         $this->db = $db;
     }
 
-    public function getInstance($productType, array $params) {
-        $class = 'Src\\Models\\' . $productType;
-        return new $class($params['sku'], $params['name'], $params['price'], $params['attribute']);
+    public function getInstance($productType) {
+        $Class = 'Src\\Models\\' . $productType;
+        return new $Class;
     }
 
     public function find($sku) {
