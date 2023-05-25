@@ -58,9 +58,17 @@ class ProductHandler implements ProductHandlerInterface {
         
     }
 
-    public function insert(array $productDetails, $productType) {
-        $product = $this->getInstance($productType, $productDetails);
-        $productAttributeKey = key($product->getSpecialAttribute());
+    public function insert(array $productDetails) {
+        extract($productDetails);
+
+        $product = $this->getInstance($type);
+        $product->setSKU($sku);
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setSpecialAttribute($attribute);
+
+        $productAttribute = $product->getSpecialAttribute();
+        $productAttributeKey = key($productAttribute);
 
         $productInsertQuery = $product->getInsertQuery();
         $localInsertQuery = '
@@ -70,21 +78,19 @@ class ProductHandler implements ProductHandlerInterface {
                 (:sku, :name, :price, :type)
         ';
 
-        // LATER IMPROVEMENTS? Use extract()
-        
         try {
             $localInsertStmt = $this->db->prepare($localInsertQuery);
             $localInsertStmt->execute([
-                'sku' => $productDetails['sku'],
-                'name' => $productDetails['name'],
-                'price' =>  $productDetails['price'],
-                'type' =>  $productType
+                'sku' => $product->getSKU(),
+                'name' => $product->getName(),
+                'price' =>  $product->getPrice(),
+                'type' =>  $type
             ]);
             
             $productInsertStmt = $this->db->prepare($productInsertQuery);
             $productInsertStmt->execute([
-                'sku' => $productDetails['sku'],
-                $productAttributeKey => $productDetails['attribute']
+                'sku' => $product->getSKU(),
+                $productAttributeKey => $productAttribute[$productAttributeKey]
             ]);
 
             // Debug - Remove Later
