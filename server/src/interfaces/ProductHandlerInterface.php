@@ -38,8 +38,9 @@ interface ProductHandlerInterface {
     /**
      * Deletes a Product from DB
      *
+     * @param array $skus
      * @return void
      */
-    public function delete();
+    public function delete($skus);
     
 }
