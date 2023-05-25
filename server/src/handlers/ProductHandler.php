@@ -17,6 +17,28 @@ class ProductHandler implements ProductHandlerInterface {
         return new $class($params['sku'], $params['name'], $params['price'], $params['attribute']);
     }
 
+    public function find($sku) {
+        $query = '
+            SELECT 
+                * 
+            FROM 
+                '. self::TABLE .'
+            WHERE
+                sku = :sku
+        ';
+        
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([
+                'sku' => $sku
+            ]);
+            $product = $stmt->fetch();
+            return $product;
+        } catch (\PDOExcerption $error) {
+            exit("Product Retrieval Error: " . $error->getMessage());
+        }
+    }
+
     public function findAll() {
         $query = '
             SELECT 
@@ -24,13 +46,14 @@ class ProductHandler implements ProductHandlerInterface {
             FROM 
                 '. self::TABLE .'
         ';
+
         try {
             $stmt = $this->db->prepare($query);
             $stmt->execute();
-            $result = $stmt->fetchAll();
-            return $result;
+            $products = $stmt->fetchAll();
+            return $products;
         } catch (\PDOExcerption $error) {
-            exit("Product Retrieval Error: " . $error->getMessage());
+            exit("Products Retrieval Error: " . $error->getMessage());
         }
         
     }
