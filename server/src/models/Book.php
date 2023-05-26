@@ -28,13 +28,13 @@ class Book extends Product {
     public function getDeleteQuery($table = 'product') {
         return '
             DELETE 
-                Product, ThisProductType 
-            FROM '. self::TABLE .'
-            INNER JOIN '. $table .' 
+                '.$table.', '.self::TABLE.'
+            FROM '.self::TABLE.'
+            INNER JOIN '.$table.' 
             ON 
-                ThisProductType.product_sku = Product.sku 
+                '.self::TABLE.'.product_sku = '.$table.'.sku 
             WHERE 
-                Product.sku = :sku
+                '.$table.'.sku = :sku
         ';
     }
 }
