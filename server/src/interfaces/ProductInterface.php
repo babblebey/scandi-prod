@@ -29,7 +29,7 @@ interface ProductInterface {
     /**
      * Sets Product Special Attribute (weight || size || dimension)
      *
-     * @param int||string $attr
+     * @param mixed $attr
      * @return void
      */
     public function setSpecialAttribute($attr);
