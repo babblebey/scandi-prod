@@ -44,7 +44,7 @@ class ProductHandler implements ProductHandlerInterface {
             SELECT 
                 * 
             FROM 
-                '. self::TABLE .'
+                '.self::TABLE.'
         ';
 
         try {
@@ -72,7 +72,7 @@ class ProductHandler implements ProductHandlerInterface {
 
         $productInsertQuery = $product->getInsertQuery();
         $localInsertQuery = '
-            INSERT INTO '. self::TABLE .' 
+            INSERT INTO '.self::TABLE.' 
                 (sku, name, price, type)
             VALUES
                 (:sku, :name, :price, :type)
@@ -100,7 +100,26 @@ class ProductHandler implements ProductHandlerInterface {
         }
     }
 
-    public function delete() {
+    public function delete(array $skus) {
+        try {
+            foreach ($skus as $sku) {
+                $p = $this->find($sku);
+                $productType = $p->type;
 
+                $product = $this->getInstance($productType);
+
+                $query = $product->getDeleteQuery();
+
+                $stmt = $this->db->prepare($query);
+                $stmt->execute([
+                    'sku' => $sku
+                ]);
+            }
+
+            // Debug - Remove Later
+            echo "Product Deleted Successfully!";
+        } catch (\PDOExcerption $error) {
+            exit("Product Deletion Error: " . $error->getMessage());
+        }
     }
 }
