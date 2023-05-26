@@ -39,6 +39,6 @@ interface ProductHandlerInterface {
      * @param array $skus
      * @return void
      */
-    public function delete($skus);
+    public function delete(array $skus);
     
 }
