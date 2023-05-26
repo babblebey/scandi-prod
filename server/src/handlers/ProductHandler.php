@@ -92,15 +92,18 @@ class ProductHandler implements ProductHandlerInterface {
                 'sku' => $product->getSKU(),
                 $productAttributeKey => $productAttribute[$productAttributeKey]
             ]);
+            return $localInsertStmt->rowCount();
 
             // Debug - Remove Later
-            echo "Product Inserted Successfully!";
+            // echo $localInsertStmt->rowCount() . ' rows inserted! <br/>';
+            // echo "Product Inserted Successfully!";
         } catch (\PDOExcerption $error) {
             exit("Product Insertion Error: " . $error->getMessage());
         }
     }
 
     public function delete(array $skus) {
+        $count = 0;
         try {
             foreach ($skus as $sku) {
                 $p = $this->find($sku);
@@ -114,10 +117,14 @@ class ProductHandler implements ProductHandlerInterface {
                 $stmt->execute([
                     'sku' => $sku
                 ]);
+
+                $count += $stmt->rowCount();
             }
+            return $count;
 
             // Debug - Remove Later
-            echo "Product Deleted Successfully!";
+            // echo $count . ' rows deleted! <br/>';
+            // echo "Product Deleted Successfully!";
         } catch (\PDOExcerption $error) {
             exit("Product Deletion Error: " . $error->getMessage());
         }
