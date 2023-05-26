@@ -29,7 +29,7 @@ interface ProductHandlerInterface {
      * Adds a New Product to DB
      *
      * @param array $productDetails
-     * @return void
+     * @return int number of inserted rows
      */
     public function insert(array $productDetails);
 
@@ -37,7 +37,7 @@ interface ProductHandlerInterface {
      * Deletes a Product from DB
      *
      * @param array $skus
-     * @return void
+     * @return int  number of deleted rows
      */
     public function delete(array $skus);
     
