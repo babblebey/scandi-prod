@@ -23,7 +23,7 @@ class ProductController {
         $this->requestMethod = $requestMethod;
         $this->payload = $payload;
 
-        $this->$productHandle = new ProductHandler($db);
+        $this->productHandle = new ProductHandler($db);
     }
 
     /**
