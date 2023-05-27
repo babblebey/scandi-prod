@@ -54,17 +54,23 @@ class ProductController {
     }
 
     /**
-     * Adds Product to DB
+     * Adds a Product to DB
      * 
      * @uses \ProductHandler::insert()
      * @uses validateProductPayload()
-     * @uses okResponse()
+     * @uses createdResponse()
      *
      * @param mixed $payload 
      * @return array Response Object Body with Success Message and Status Code '201 - Created'
      */
     private function addProduct($payload) {
-
+        $isValidInput = $this->validateProductPayload(json_decode($payload));
+        if (!$isValidInput) {
+            return $this->unproccesableEntityResponse();
+        }
+        $productDetails = json_decode($payload, true);
+        $this->productHandle->insert($productDetails);
+        return $this->createdResponse();
     }
 
     /**
