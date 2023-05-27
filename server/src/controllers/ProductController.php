@@ -97,9 +97,9 @@ class ProductController {
      */
     private function okResponse() {
         $response['statusCode'] = self::STATUS_CODE_200;
-        $response['body'] = [
+        $response['body'] = json_encode([
             'message' => 'success'
-        ];
+        ]);
         return $response;
     }
 
@@ -110,10 +110,10 @@ class ProductController {
      */
     private function noContentResponse() {
         $response['statusCode'] = self::STATUS_CODE_204;
-        $response['body'] = [
+        $response['body'] = json_encode([
             'message' => 'no products found', 
             'data' => null
-        ];
+        ]);
         return $response;
     }
 
@@ -124,9 +124,9 @@ class ProductController {
      */
     private function unproccesableEntityResponse() {
         $response['statusCode'] = self::STATUS_CODE_422;
-        $response['body'] = [
+        $response['body'] = json_encode([
             'error' => 'invalid payload'
-        ];
+        ]);
         return $response;
     }
 
@@ -137,9 +137,9 @@ class ProductController {
      */
     private function notFoundResponse() {
         $response['statusCode'] = self::STATUS_CODE_404;
-        $response['body'] = [
+        $response['body'] = json_encode([
             'error' => 'not found'
-        ];
+        ]);
         return $response;
     }
 }
