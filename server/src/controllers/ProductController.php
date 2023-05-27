@@ -60,10 +60,10 @@ class ProductController {
      * @uses validateProductPayload()
      * @uses okResponse()
      *
-     * @param array $payload 
+     * @param mixed $payload 
      * @return array Response Object Body with Success Message and Status Code '201 - Created'
      */
-    private function addProduct(array $payload) {
+    private function addProduct($payload) {
 
     }
 
@@ -81,13 +81,21 @@ class ProductController {
     }
 
     /**
-     * Checks If all Product Fields are present in payload
+     * Checks If all Product Fields are present, and are of correct datatype in payload
      * 
-     * @param array $payload 
+     * @param mixed $payload  
      * @return boolean True or False
      */
-    private function validateProductPayload(array $payload) {
+    private function validateProductPayload($payload) {
+        $isValidSKU = isset($payload->sku) && is_string($payload->sku);
+        $isValidName = isset($payload->name) && is_string($payload->name);
+        $isValidPrice = isset($payload->price) && (is_integer($payload->price) || is_float($payload->price));
+        $isValidAttribute = isset($payload->attribute) && is_string($payload->attribute);
 
+        if (!$isValidSKU || !$isValidName || !$isValidPrice || !$isValidAttribute) {
+            return false;
+        }
+        return true;
     }
 
     /**
