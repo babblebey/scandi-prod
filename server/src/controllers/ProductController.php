@@ -8,6 +8,7 @@ class ProductController {
     const STATUS_CODE_201 = 'HTTP/1.1 201 Created';
     const STATUS_CODE_204 = 'HTTP/1.1 204 No Content';
     const STATUS_CODE_404 = 'HTTP/1.1 404 Not Found';
+    const STATUS_CODE_422 = 'HTTP/1.1 422 Uprocessable Entity';
 
     private $db;
     private $requestMethod;
