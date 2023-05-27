@@ -112,6 +112,19 @@ class ProductController {
     }
 
     /**
+     * Sets Response Body to Success Message and Status Code Header to '201 - Created'
+     *
+     * @return array Created Response Object
+     */
+    private function createdResponse() {
+        $response['statusCode'] = self::STATUS_CODE_201;
+        $response['body'] = json_encode([
+            'message' => 'product added successfully'
+        ]);
+        return $response;
+    }
+
+    /**
      * Sets Response Body to 'Null' and Status Code Header to '204 - No Content'
      *
      * @return array No Content Response Object
