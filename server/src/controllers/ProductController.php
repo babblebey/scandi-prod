@@ -33,8 +33,9 @@ class ProductController {
      * @uses addProduct()
      * @uses deleteProduct()
      * @uses notFoundResponse()
+     * @uses header() HTTP Header @see @link https://www.php.net/manual/en/function.header.php
      * 
-     * @return object Response Object
+     * @return void
      */
     public function handleRequest() {
 
@@ -46,7 +47,7 @@ class ProductController {
      * @uses \ProductHandler::findAll()
      * @uses noContentResponse()
      *
-     * @return object Response Object Body with 'All Products' | 'Null' and Status Code '200 - OK' | '204 No Content'
+     * @return array Response Object Body with 'All Products' | 'Null' and Status Code '200 - OK' | '204 No Content'
      */
     private function getAllProducts() {
 
@@ -60,7 +61,7 @@ class ProductController {
      * @uses okResponse()
      *
      * @param array $payload 
-     * @return object Response Object Body with Success Message and Status Code '201 - Created'
+     * @return array Response Object Body with Success Message and Status Code '201 - Created'
      */
     private function addProduct(array $payload) {
 
@@ -73,7 +74,7 @@ class ProductController {
      * @uses okResponse()
      *
      * @param array $skus
-     * @return object
+     * @return array
      */
     private function deleteProduct(array $skus) {
 
@@ -92,7 +93,7 @@ class ProductController {
     /**
      * Sets Response Body to Success Meesage and Status Code Header to '200 - OK'
      *
-     * @return object OK Response Object
+     * @return array OK Response Object
      */
     private function okResponse() {
         $response['statusCode'] = self::STATUS_CODE_200;
@@ -105,7 +106,7 @@ class ProductController {
     /**
      * Sets Response Body to 'Null' and Status Code Header to '204 - No Content'
      *
-     * @return object No Content Response Object
+     * @return array No Content Response Object
      */
     private function noContentResponse() {
         $response['statusCode'] = self::STATUS_CODE_204;
@@ -119,7 +120,7 @@ class ProductController {
     /**
      * Sets Response Body to 'Invalid' and Status Code Header to '422'
      *
-     * @return object Uprocessable Entity Response Object
+     * @return array Uprocessable Entity Response Object
      */
     private function unproccesableEntityResponse() {
         $response['statusCode'] = self::STATUS_CODE_422;
@@ -132,7 +133,7 @@ class ProductController {
     /**
      * Sets Response Body to 'Null' and Status Code Header to '404 - Not Found'
      *
-     * @return object Not Found Response Object
+     * @return array Not Found Response Object
      */
     private function notFoundResponse() {
         $response['statusCode'] = self::STATUS_CODE_404;
