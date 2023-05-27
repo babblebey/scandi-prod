@@ -91,8 +91,9 @@ class ProductController {
         $isValidName = isset($payload->name) && is_string($payload->name);
         $isValidPrice = isset($payload->price) && (is_integer($payload->price) || is_float($payload->price));
         $isValidAttribute = isset($payload->attribute) && is_string($payload->attribute);
+        $isValidProductType = isset($payload->type) && in_array($payload->type, ['Book', 'Furniture', 'DVD'], true);
 
-        if (!$isValidSKU || !$isValidName || !$isValidPrice || !$isValidAttribute) {
+        if (!$isValidSKU || !$isValidName || !$isValidPrice || !$isValidAttribute || !$isValidProductType) {
             return false;
         }
         return true;
