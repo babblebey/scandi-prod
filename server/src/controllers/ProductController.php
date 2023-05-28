@@ -57,15 +57,15 @@ class ProductController {
      * Adds a Product to DB
      * 
      * @uses \ProductHandler::insert()
-     * @uses validateProductPayload()
+     * @uses validatePayload()
      * @uses createdResponse()
      *
      * @param mixed $payload 
      * @return array Response Object Body with Success Message and Status Code '201 - Created'
      */
     private function addProduct($payload) {
-        $isValidInput = $this->validateProductPayload(json_decode($payload));
-        if (!$isValidInput) {
+        $isValidPayload = $this->validatePayload($payload, 'insert');
+        if (!$isValidPayload) {
             return $this->unproccesableEntityResponse();
         }
         $productDetails = json_decode($payload, true);
@@ -77,6 +77,7 @@ class ProductController {
      * Deletes Specified Product(s) from DB
      * 
      * @uses \ProductHandler::delete()
+     * @uses unproccesableEntityResponse()
      * @uses notFoundResponse()
      * @uses okResponse()
      *
@@ -84,6 +85,10 @@ class ProductController {
      * @return array
      */
     private function deleteProduct($payload) {
+        $isValidPayload = $this->validatePayload($payload, 'delete');
+        if (!$isValidPayload) {
+            return $this->unproccesableEntityResponse();
+        }
         extract(json_decode($payload, true));
         $result = $this->productHandle->delete($skus);
         if (!$result) {
@@ -93,22 +98,40 @@ class ProductController {
     }
 
     /**
-     * Checks If all Product Fields are present, and are of correct datatype in payload
+     * Checks If payload's values are present and/or in correct datatype
      * 
      * @uses \ProductHandler::find()
+     * @uses extract()
+     * @uses json_decode()
      * 
      * @param mixed $payload  
+     * @param string $action
      * @return boolean True or False
      */
-    private function validateProductPayload($payload) {
-        $isValidSKU = isset($payload->sku) && is_string($payload->sku) && !$this->productHandle->find($payload->sku);
-        $isValidName = isset($payload->name) && is_string($payload->name);
-        $isValidPrice = isset($payload->price) && (is_integer($payload->price) || is_float($payload->price));
-        $isValidAttribute = isset($payload->attribute) && is_string($payload->attribute);
-        $isValidProductType = isset($payload->type) && in_array($payload->type, ['Book', 'Furniture', 'DVD'], true);
+    private function validatePayload($payload, $action) {
+        extract(json_decode($payload, true));
+        switch ($action) {
+            case 'insert':
+                $isValidSKU = isset($sku) && is_string($sku) && !$this->productHandle->find($sku);
+                $isValidName = isset($name) && is_string($name);
+                $isValidPrice = isset($price) && (is_integer($price) || is_float($price));
+                $isValidAttribute = isset($attribute) && is_string($attribute);
+                $isValidProductType = isset($type) && in_array($type, ['Book', 'Furniture', 'DVD'], true);
 
-        if (!$isValidSKU || !$isValidName || !$isValidPrice || !$isValidAttribute || !$isValidProductType) {
-            return false;
+                if (!$isValidSKU || !$isValidName || !$isValidPrice || !$isValidAttribute || !$isValidProductType) {
+                    return false;
+                }
+                break;
+
+            case 'delete':
+                if (!isset($skus) || !is_array($skus)) {
+                    return false;
+                }
+                break;
+            
+            default:
+                return false;
+                break;
         }
         return true;
     }
