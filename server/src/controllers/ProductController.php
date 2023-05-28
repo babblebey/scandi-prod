@@ -110,12 +110,15 @@ class ProductController {
     /**
      * Sets Response Body to Success Meesage and Status Code Header to '200 - OK'
      *
+     * @param array|object|mixed $data optional
+     * @param string $message optional
      * @return array OK Response Object
      */
-    private function okResponse() {
+    private function okResponse($data = [], $message = 'success') {
         $response['statusCode'] = self::STATUS_CODE_200;
         $response['body'] = json_encode([
-            'message' => 'success'
+            'message' => $message,
+            'data' => $data
         ]);
         return $response;
     }
@@ -123,26 +126,31 @@ class ProductController {
     /**
      * Sets Response Body to Success Message and Status Code Header to '201 - Created'
      *
+     * @param array|object|mixed $data optional
+     * @param string $message optional
      * @return array Created Response Object
      */
-    private function createdResponse() {
+    private function createdResponse($data = [], $message = 'product added successfully') {
         $response['statusCode'] = self::STATUS_CODE_201;
         $response['body'] = json_encode([
-            'message' => 'product added successfully'
+            'message' => $message,
+            'data' => $data
         ]);
         return $response;
     }
 
     /**
      * Sets Response Body to 'Null' and Status Code Header to '204 - No Content'
-     *
+     * 
+     * @param null $data optional
+     * @param string $message optional
      * @return array No Content Response Object
      */
-    private function noContentResponse() {
+    private function noContentResponse($data = null, $message = 'no products found') {
         $response['statusCode'] = self::STATUS_CODE_204;
         $response['body'] = json_encode([
-            'message' => 'no products found', 
-            'data' => null
+            'message' => $message, 
+            'data' => $data
         ]);
         return $response;
     }
@@ -150,12 +158,13 @@ class ProductController {
     /**
      * Sets Response Body to 'Invalid' and Status Code Header to '422'
      *
+     * @param string $message optional
      * @return array Uprocessable Entity Response Object
      */
-    private function unproccesableEntityResponse() {
+    private function unproccesableEntityResponse($message = 'invalid payload') {
         $response['statusCode'] = self::STATUS_CODE_422;
         $response['body'] = json_encode([
-            'error' => 'invalid payload'
+            'error' => $message
         ]);
         return $response;
     }
@@ -163,12 +172,13 @@ class ProductController {
     /**
      * Sets Response Body to 'Null' and Status Code Header to '404 - Not Found'
      *
+     * @param string $message optional
      * @return array Not Found Response Object
      */
-    private function notFoundResponse() {
+    private function notFoundResponse($message = 'not found') {
         $response['statusCode'] = self::STATUS_CODE_404;
         $response['body'] = json_encode([
-            'error' => 'not found'
+            'error' => $message
         ]);
         return $response;
     }
