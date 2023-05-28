@@ -77,13 +77,19 @@ class ProductController {
      * Deletes Specified Product(s) from DB
      * 
      * @uses \ProductHandler::delete()
+     * @uses notFoundResponse()
      * @uses okResponse()
      *
-     * @param array $skus
+     * @param mixed $payload
      * @return array
      */
-    private function deleteProduct(array $skus) {
-
+    private function deleteProduct($payload) {
+        extract(json_decode($payload, true));
+        $result = $this->productHandle->delete($skus);
+        if (!$result) {
+            return $this->notFoundResponse('one or more product(s) not found');
+        }
+        return $this->okResponse();
     }
 
     /**

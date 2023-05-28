@@ -104,14 +104,21 @@ class ProductHandler implements ProductHandlerInterface {
 
     public function delete(array $skus) {
         $count = 0;
+        $productsFound = [];
+
+        foreach($skus as $sku) {
+            $p = $this->find($sku);
+            if (!$p) {
+                return $count;
+            }
+            array_push($productsFound, $p);
+        }
+
         try {
-            foreach ($skus as $sku) {
-                $p = $this->find($sku);
-                $productType = $p->type;
-
-                $product = $this->getInstance($productType);
-
-                $query = $product->getDeleteQuery();
+            foreach ($productsFound as $product) {
+                $productInstance = $this->getInstance($product->type);
+                
+                $query = $productInstance->getDeleteQuery();
 
                 $stmt = $this->db->prepare($query);
                 $stmt->execute([
