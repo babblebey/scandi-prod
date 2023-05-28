@@ -34,7 +34,7 @@ class ProductHandler implements ProductHandlerInterface {
             ]);
             $product = $stmt->fetch();
             return $product;
-        } catch (\PDOExcerption $error) {
+        } catch (\PDOException $error) {
             exit("Product Retrieval Error: " . $error->getMessage());
         }
     }
@@ -52,7 +52,7 @@ class ProductHandler implements ProductHandlerInterface {
             $stmt->execute();
             $products = $stmt->fetchAll();
             return $products;
-        } catch (\PDOExcerption $error) {
+        } catch (\PDOException $error) {
             exit("Products Retrieval Error: " . $error->getMessage());
         }
         
@@ -96,8 +96,8 @@ class ProductHandler implements ProductHandlerInterface {
 
             // Debug - Remove Later
             // echo $localInsertStmt->rowCount() . ' rows inserted! <br/>';
-            // echo "Product Inserted Successfully!";
-        } catch (\PDOExcerption $error) {
+            // echo "Product Inserted Successfully!";PDOException
+        } catch (\PDOException $error) {
             exit("Product Insertion Error: " . $error->getMessage());
         }
     }
@@ -125,7 +125,7 @@ class ProductHandler implements ProductHandlerInterface {
             // Debug - Remove Later
             // echo $count . ' rows deleted! <br/>';
             // echo "Product Deleted Successfully!";
-        } catch (\PDOExcerption $error) {
+        } catch (\PDOException $error) {
             exit("Product Deletion Error: " . $error->getMessage());
         }
     }
