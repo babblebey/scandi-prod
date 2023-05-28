@@ -27,7 +27,7 @@ class ProductController {
     }
 
     /**
-     * Handles All Requests by Methods (GET | POST | DELETE)
+     * Handles All Requests by Methods (GET | POST | DELETE), attaching appropriate method/productHandler function 
      *
      * @uses getAllProducts()
      * @uses addProduct()
@@ -35,10 +35,31 @@ class ProductController {
      * @uses notFoundResponse()
      * @uses header() HTTP Header @see @link https://www.php.net/manual/en/function.header.php
      * 
+     * @todo attach getAllProducts() method to 'GET' case for $requestMethod
+     * 
      * @return void
      */
     public function handleRequest() {
+        switch ($this->requestMethod) {
+            case 'GET':
+                $response = $this->okResponse();
+                break;
+            
+            case 'POST':
+                $response = $this->addProduct($this->payload);
+                break;
+            
+            case 'DELETE':
+                $response = $this->deleteProduct($this->payload);
+                break;
 
+            default:
+                $response = $this->notFoundResponse('no response found for that request');
+                break;
+        }
+
+        header($response['statusCode']);
+        echo $response['body'];
     }
 
     /**
