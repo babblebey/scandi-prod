@@ -8,6 +8,7 @@ class ProductController {
     const STATUS_CODE_201 = 'HTTP/1.1 201 Created';
     const STATUS_CODE_204 = 'HTTP/1.1 204 No Content';
     const STATUS_CODE_404 = 'HTTP/1.1 404 Not Found';
+    const STATUS_CODE_405 = 'HTTP/1.1 405 Method Not Allowed';
     const STATUS_CODE_422 = 'HTTP/1.1 422 Uprocessable Entity';
 
     private $db;
@@ -54,7 +55,7 @@ class ProductController {
                 break;
 
             default:
-                $response = $this->notFoundResponse('no response found for that request');
+                $response = $this->methodNotAllowedResponse('no support for '.$this->requestMethod.' request method');
                 break;
         }
 
@@ -206,7 +207,7 @@ class ProductController {
     }
 
     /**
-     * Sets Response Body to 'Invalid' and Status Code Header to '422'
+     * Sets Response Body to 'error message' and Status Code Header to '422'
      *
      * @param string $message optional
      * @return array Uprocessable Entity Response Object
@@ -220,13 +221,27 @@ class ProductController {
     }
 
     /**
-     * Sets Response Body to 'Null' and Status Code Header to '404 - Not Found'
+     * Sets Response Body to 'error message' and Status Code Header to '404 - Not Found'
      *
      * @param string $message optional
      * @return array Not Found Response Object
      */
     private function notFoundResponse($message = 'not found') {
         $response['statusCode'] = self::STATUS_CODE_404;
+        $response['body'] = json_encode([
+            'error' => $message
+        ]);
+        return $response;
+    }
+
+    /**
+     * Sets Response Body to 'error message' and Status Code Header to '405 - Method Not Allowed'
+     *
+     * @param string $message optional
+     * @return array Method Not Allowed Response Object
+     */
+    private function methodNotAllowedResponse($message = 'method not allowed') {
+        $response['statusCode'] = self::STATUS_CODE_405;
         $response['body'] = json_encode([
             'error' => $message
         ]);
