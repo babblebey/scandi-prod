@@ -36,14 +36,12 @@ class ProductController {
      * @uses methodNotAllowedResponse()
      * @uses header() HTTP Header @see @link https://www.php.net/manual/en/function.header.php
      * 
-     * @todo attach getAllProducts() method to 'GET' case for $requestMethod
-     * 
      * @return void
      */
     public function handleRequest() {
         switch ($this->requestMethod) {
             case 'GET':
-                $response = $this->okResponse();
+                $response = $this->getAllProducts();
                 break;
             
             case 'POST':
@@ -68,11 +66,16 @@ class ProductController {
      * 
      * @uses \ProductHandler::findAll()
      * @uses noContentResponse()
+     * @uses okResponse()
      *
      * @return array Response Object Body with 'All Products' | 'Null' and Status Code '200 - OK' | '204 No Content'
      */
     private function getAllProducts() {
-
+        $products = $this->productHandle->findAll();
+        if (!$products) {
+            return $this->noContentResponse();
+        }
+        return $this->okResponse($products);
     }
 
     /**
