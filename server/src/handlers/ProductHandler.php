@@ -40,17 +40,33 @@ class ProductHandler implements ProductHandlerInterface {
     }
 
     public function findAll() {
-        $query = '
-            SELECT 
-                * 
-            FROM 
-                '.self::TABLE.'
-        ';
-
         try {
-            $stmt = $this->db->prepare($query);
+            $stmt = $this->db->prepare('SELECT * FROM '.self::TABLE.'');
             $stmt->execute();
-            $products = $stmt->fetchAll();
+            $products = [];
+
+            while ($row = $stmt->fetch()) {
+                $product = $this->getInstance($row->type);
+
+                $findQuery = $product->getFindQuery();
+
+                $findStmt = $this->db->prepare($findQuery);
+                $findStmt->execute([
+                    'sku' => $row->sku
+                ]);
+                $foundProduct = $findStmt->fetch();
+
+                $product->setAttribute($foundProduct->attribute);
+
+                array_push($products, [
+                    'type' => $row->type,
+                    'sku' => $foundProduct->sku,
+                    'name' => $foundProduct->name,
+                    'price' => $foundProduct->price,
+                    'attribute' => $product->getAttribute()
+                ]);
+            }
+            
             return $products;
         } catch (\PDOException $error) {
             exit("Products Retrieval Error: " . $error->getMessage());
