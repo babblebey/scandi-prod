@@ -33,7 +33,7 @@ class ProductController {
      * @uses getAllProducts()
      * @uses addProduct()
      * @uses deleteProduct()
-     * @uses notFoundResponse()
+     * @uses methodNotAllowedResponse()
      * @uses header() HTTP Header @see @link https://www.php.net/manual/en/function.header.php
      * 
      * @todo attach getAllProducts() method to 'GET' case for $requestMethod
