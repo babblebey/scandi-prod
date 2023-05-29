@@ -65,9 +65,9 @@ class ProductHandler implements ProductHandlerInterface {
         $product->setSKU($sku);
         $product->setName($name);
         $product->setPrice($price);
-        $product->setSpecialAttribute($attribute);
+        $product->setAttribute($attribute);
 
-        $productAttribute = $product->getSpecialAttribute();
+        $productAttribute = $product->getAttribute();
         $productAttributeKey = key($productAttribute);
 
         $productInsertQuery = $product->getInsertQuery();

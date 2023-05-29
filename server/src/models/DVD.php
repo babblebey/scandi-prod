@@ -6,14 +6,14 @@ use Src\Models\Product;
 class DVD extends Product {
     const TABLE = 'dvd';
 
-    private $size;
+    private $attribute = ['size' => null];
 
-    public function setSpecialAttribute($attr) {
-        $this->size = $attr;
+    public function setAttribute($attr) {
+        $this->attribute['size'] = $attr;
     }
 
-    public function getSpecialAttribute() {
-        return ['size' => $this->size];
+    public function getAttribute() {
+        return $this->attribute;
     }
 
     public function getInsertQuery() {

@@ -20,7 +20,7 @@ abstract class Product implements ProductInterface {
         $this->price = $price;
     }
 
-    abstract public function setSpecialAttribute($attr);
+    abstract public function setAttribute($attr);
 
     public function getName() {
         return $this->name;
@@ -34,7 +34,7 @@ abstract class Product implements ProductInterface {
         return $this->price;
     }
 
-    abstract public function getSpecialAttribute();
+    abstract public function getAttribute();
 
     abstract public function getInsertQuery();
 

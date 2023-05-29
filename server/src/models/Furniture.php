@@ -6,14 +6,14 @@ use Src\Models\Product;
 class Furniture extends Product {
     const TABLE = 'furniture';
 
-    private $dimensions;
+    private $attribute = ['dimensions' => null];
     
-    public function setSpecialAttribute($attr) {
-        $this->dimensions = $attr;
+    public function setAttribute($attr) {
+        $this->attribute['dimensions'] = $attr;
     }
 
-    public function getSpecialAttribute() {
-        return ['dimensions' => $this->dimensions];
+    public function getAttribute() {
+        return $this->attribute;
     }
 
     public function getInsertQuery() {

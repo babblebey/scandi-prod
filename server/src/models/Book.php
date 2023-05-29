@@ -6,14 +6,14 @@ use Src\Models\Product;
 class Book extends Product {
     const TABLE = 'book';
 
-    private $weight;
+    private $attribute = ['weight' => null];
 
-    public function setSpecialAttribute($attr) {
-        $this->weight = $attr;
+    public function setAttribute($attr) {
+        $this->attribute['weight'] = $attr;
     }
 
-    public function getSpecialAttribute() {
-        return ['weight' => $this->weight];
+    public function getAttribute() {
+        return $this->attribute;
     }
 
     public function getInsertQuery() {

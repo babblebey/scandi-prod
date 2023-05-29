@@ -27,12 +27,12 @@ interface ProductInterface {
     public function setPrice($price);
 
     /**
-     * Sets Product Special Attribute (weight || size || dimension)
+     * Sets Product Attribute (weight || size || dimensions)
      *
      * @param mixed $attr
      * @return void
      */
-    public function setSpecialAttribute($attr);
+    public function setAttribute($attr);
 
     /**
      * Gets Product Name
@@ -56,11 +56,11 @@ interface ProductInterface {
     public function getPrice();
 
     /**
-     * Gets Product Special Attribute (weight || size || dimension)
+     * Gets Product Attribute (weight || size || dimensions)
      *
      * @return string
      */
-    public function getSpecialAttribute();
+    public function getAttribute();
 
     /**
      * Gets Product SQL Query for Inserting Product to DB
