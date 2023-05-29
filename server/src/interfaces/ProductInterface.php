@@ -63,6 +63,13 @@ interface ProductInterface {
     public function getAttribute();
 
     /**
+     * Gets Product SQL Query for Finding Product in DB
+     *
+     * @return string
+     */
+    public function getFindQuery($table);
+
+    /**
      * Gets Product SQL Query for Inserting Product to DB
      *
      * @return string

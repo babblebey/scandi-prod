@@ -16,9 +16,24 @@ class Furniture extends Product {
         return $this->attribute;
     }
 
+    public function getFindQuery($table = 'product') {
+        $attributeKey = key($this->getAttribute());
+        
+        return '
+            SELECT 
+                Product.sku, Product.name, Product.price, ProductType.'.$attributeKey.' AS attribute 
+            FROM '.$table.' Product
+            LEFT JOIN '.self::TABLE.' ProductType 
+            ON 
+                Product.sku = ProductType.product_sku
+            WHERE 
+                Product.sku = :sku
+        ';
+    }
+
     public function getInsertQuery() {
         return '
-            INSERT INTO '. self::TABLE .' 
+            INSERT INTO '.self::TABLE.' 
                 (product_sku, dimensions)
             VALUES
                 (:sku, :dimensions)
