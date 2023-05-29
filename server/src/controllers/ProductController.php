@@ -65,16 +65,12 @@ class ProductController {
      * Gets All Product from DB
      * 
      * @uses \ProductHandler::findAll()
-     * @uses noContentResponse()
      * @uses okResponse()
      *
-     * @return array Response Object Body with 'All Products' | 'Null' and Status Code '200 - OK' | '204 No Content'
+     * @return array Response Object Body with an array of products and Status Code '200 - OK'
      */
     private function getAllProducts() {
         $products = $this->productHandle->findAll();
-        if (!$products) {
-            return $this->noContentResponse();
-        }
         return $this->okResponse($products);
     }
 
@@ -194,13 +190,13 @@ class ProductController {
     }
 
     /**
-     * Sets Response Body to 'Null' and Status Code Header to '204 - No Content'
+     * Sets Response Body to empty array and Status Code Header to '204 - No Content'
      * 
      * @param null $data optional
      * @param string $message optional
      * @return array No Content Response Object
      */
-    private function noContentResponse($data = null, $message = 'no products found') {
+    private function noContentResponse($data = [], $message = 'no products found') {
         $response['statusCode'] = self::STATUS_CODE_204;
         $response['body'] = json_encode([
             'message' => $message, 
