@@ -9,10 +9,10 @@ class Database {
     private $connection;
 
     public function __construct() {
-        $this->host = "";
-        $this->db = "";
-        $this->user = "";
-        $this->password = "";
+        $this->host = $_ENV['DB_HOST'];
+        $this->db = $_ENV['DB_NAME'];
+        $this->user = $_ENV['DB_USER'];
+        $this->password = $_ENV['DB_PASSWORD'];
         $this->connection = null;
     }
 
@@ -27,10 +27,10 @@ class Database {
         try {
             $this->connection = new \PDO($dsn, $this->user, $this->password);
             $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
-
-            // Debug - Remove Later
-            echo 'DB Connected Succesfully!';
             
+            // Debug - Remove Later
+            // echo 'DB Connected Succesfully!';
+
             return $this->connection;
         } catch (\PDOException $error) {
             die("DB Connection Error: " . $error->getMessage());

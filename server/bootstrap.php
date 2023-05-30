@@ -1,18 +1,9 @@
 <?php 
 require 'vendor/autoload.php';
 
+use Dotenv\Dotenv;
 use Src\Config\Database;
-use Src\Handlers\ProductHandler;
 
-// $db = (new Database())->connect();
+$dotenv = (Dotenv::createImmutable(__DIR__))->load();
 
-// $productHandle = new ProductHandler($db);
-
-// // print_r($productHandle->findAll());
-
-// $productHandle->insert([
-//     'sku' => 'hfngn-fff-fff',
-//     'name' => 'Latest Shoes',
-//     'price' => 20.3,
-//     'attribute' => 700
-// ], 'Book');
+$db = (new Database())->connect();
