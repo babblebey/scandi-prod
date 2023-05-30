@@ -6,10 +6,10 @@ use Src\Models\Product;
 class Furniture extends Product {
     const TABLE = 'furniture';
 
-    private $attribute = ['dimensions' => null];
+    private $attribute = ['dimension' => null];
     
     public function setAttribute($attr) {
-        $this->attribute['dimensions'] = $attr;
+        $this->attribute['dimension'] = $attr;
     }
 
     public function getAttribute() {
@@ -34,9 +34,9 @@ class Furniture extends Product {
     public function getInsertQuery() {
         return '
             INSERT INTO '.self::TABLE.' 
-                (product_sku, dimensions)
+                (product_sku, dimension)
             VALUES
-                (:sku, :dimensions)
+                (:sku, :dimension)
         ';
     }
 
