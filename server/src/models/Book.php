@@ -9,7 +9,7 @@ class Book extends Product {
     private $attribute = ['weight' => null];
 
     public function setAttribute($attr) {
-        $this->attribute['weight'] = $attr;
+        $this->attribute['weight'] = $attr.' KG';
     }
 
     public function getAttribute() {

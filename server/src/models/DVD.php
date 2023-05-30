@@ -9,7 +9,7 @@ class DVD extends Product {
     private $attribute = ['size' => null];
 
     public function setAttribute($attr) {
-        $this->attribute['size'] = $attr;
+        $this->attribute['size'] = $attr.' MB';
     }
 
     public function getAttribute() {
