@@ -70,11 +70,12 @@ const Home: FC<HomeProps> = () => {
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
                         { !!(selectedProductSKUs.length) && (
-                            <Button variant="outline-danger" className="me-4 shadow">
+                            // Render Delete Button when a Product is selected
+                            <Button variant="danger" className="me-4 shadow">
                                 <TrashIcon />
                                 <span>
                                     Mass Delete 
-                                    <span className="ms-1 d-none d-md-block">
+                                    <span className="ms-1 d-none d-lg-block">
                                         Selected Products
                                     </span> 
                                 </span>
@@ -85,7 +86,7 @@ const Home: FC<HomeProps> = () => {
                             <PlusIcon />
                             <span>
                                 Add 
-                                <span className="ms-1 d-none d-md-block">
+                                <span className="ms-1 d-none d-lg-block">
                                     New Product
                                 </span> 
                             </span>
