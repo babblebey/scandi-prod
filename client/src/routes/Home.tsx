@@ -31,6 +31,34 @@ const Home: FC<HomeProps> = () => {
         });
     }, []);
 
+    const handleDelete = (): void => {
+        axios.delete('http://127.0.0.1:8000/products', {
+            data: {
+                skus: selectedProductSKUs
+            }
+        })
+        .then(response => {
+            // If response is OK
+            if (response.status === 200) {
+                // Filter delected products from products using selectedProductSKUs
+                const updatedProducts = products?.filter(
+                    product => !selectedProductSKUs.includes(product.sku)
+                );
+
+                // Reset selectedProductSKUs to empty array
+                setSelectedProductSKUs([]);
+
+                // update products with filtered - updatedProducts
+                setProducts(updatedProducts);
+            } else {
+                throw new Error(response.data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting products:', error);
+        });
+    }
+
     // Product Select Handler
     const handleSelectProduct = (sku: string): void => {
         // Create a Copy
@@ -71,7 +99,9 @@ const Home: FC<HomeProps> = () => {
                     <Nav>
                         { !!(selectedProductSKUs.length) && (
                             // Render Delete Button when a Product is selected
-                            <Button variant="danger" className="me-4 shadow">
+                            <Button variant="danger" className="me-4 shadow"
+                                onClick={() => handleDelete()}
+                            >
                                 <TrashIcon />
                                 <span>
                                     Mass Delete 
