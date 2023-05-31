@@ -42,7 +42,7 @@ const Home: FC<HomeProps> = () => {
                     <Nav>
                         { !!(selectedProductSKUs.length) && (
                             // Render Delete Button when a Product is selected
-                            <Button variant="danger" className="me-4 shadow"
+                            <Button variant="danger" className="me-4"
                                 onClick={() => handleDelete()}
                             >
                                 <TrashIcon />
