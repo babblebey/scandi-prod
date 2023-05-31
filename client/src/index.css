@@ -42,3 +42,6 @@
     margin: 1rem;
     cursor: pointer;
 }
+.loading-wrapper, .error-wrapper, .info-wrapper {
+    height: 20vh;
+}

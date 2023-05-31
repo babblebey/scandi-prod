@@ -5,18 +5,28 @@ import Row from "react-bootstrap/Row";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 import PlusIcon from "../icons/PlusIcon";
 import TrashIcon from "../icons/TrashIcon";
 import ProductCard from "../components/ProductCard";
 import { MainContext } from "../context/MainContext";
-import { Product, AppContext } from "../types";
+import type { Product, AppContext } from "../types";
 
 interface HomeProps {
     
 }
 
 const Home: FC<HomeProps> = () => {
-    const { products, selectedProductSKUs, isSelected, handleSelectProduct, handleDelete } = useContext(MainContext) as AppContext;
+    const { 
+        products, 
+        selectedProductSKUs, 
+        isProductsLoading, 
+        isProductsError,
+        isSelected, 
+        handleSelectProduct, 
+        handleDelete 
+    } = useContext(MainContext) as AppContext;
 
     return ( 
         <>
@@ -27,7 +37,7 @@ const Home: FC<HomeProps> = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
-                        { !!(selectedProductSKUs?.length) && (
+                        { !!(selectedProductSKUs.length) && (
                             // Render Delete Button when a Product is selected
                             <Button variant="danger" className="me-4 shadow"
                                 onClick={() => handleDelete()}
@@ -56,11 +66,38 @@ const Home: FC<HomeProps> = () => {
             </Navbar>
 
             <Container>
-                <Row lg="4" md="3" sm="2" xs="1">
-                    { products && products.map((data: Product, i: number) => (
-                        <ProductCard key={i} data={data} isSelected={isSelected} handleSelect={handleSelectProduct}/>
-                    )) }
-                </Row>
+                { isProductsLoading ? (
+                    // Products is Loading - Render Spinner
+                    <Row className="loading-wrapper justify-content-center align-content-center">
+                        <Spinner animation="border" variant="primary" />
+                    </Row>
+                ) : 
+                    // Products stops loading - Checks for error?
+                    isProductsError ? (
+                        // Product Found Error - Render Alert
+                        <Row className="error-wrapper justify-content-center align-content-center">
+                            <Alert variant="danger">
+                                An error occured retrieving products!
+                            </Alert>
+                        </Row>
+                    ) : 
+                        // Products has no error - Checks if products are in response?
+                        (products.length) ? (
+                            // Products - There are products in response - Render Products
+                            <Row lg="4" md="3" sm="2" xs="1">
+                                { products.map((data: Product, i: number) => (
+                                    <ProductCard key={i} data={data} isSelected={isSelected} handleSelect={handleSelectProduct}/>
+                                )) }
+                            </Row>
+                        ) : (
+                            // No Products - There are no products found in response - Render Alert
+                            <Row className="info-wrapper justify-content-center align-content-center">
+                                <Alert variant="info">
+                                    No products found!
+                                </Alert>
+                            </Row>
+                        )
+                }
             </Container>
         </>
      );
