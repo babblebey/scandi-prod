@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import CheckIcon from "../icons/CheckIcon";
+import CancelIcon from "../icons/CancelIcon";
 import { Link } from "react-router-dom";
 
 interface AddProductProps {
@@ -26,6 +27,14 @@ const AddProduct: FC<AddProductProps> = () => {
                         Add New Product
                     </Nav>
                     <Nav>
+                        <Link to={'/'}>
+                            <Button variant="danger" className="me-4">
+                                <CancelIcon />
+                                <span className="d-none d-md-flex">
+                                    Cancel
+                                </span>
+                            </Button>
+                        </Link>
                         <Button>
                             <CheckIcon />
                             <span>
