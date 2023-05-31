@@ -51,6 +51,9 @@ class ProductController {
             case 'DELETE':
                 $response = $this->deleteProduct($this->payload);
                 break;
+            
+            case 'OPTIONS': 
+                break;
 
             default:
                 $response = $this->methodNotAllowedResponse('no support for '.$this->requestMethod.' request method');
