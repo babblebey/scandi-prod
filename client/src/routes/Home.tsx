@@ -11,6 +11,7 @@ import PlusIcon from "../icons/PlusIcon";
 import TrashIcon from "../icons/TrashIcon";
 import ProductCard from "../components/ProductCard";
 import { MainContext } from "../context/MainContext";
+import { Link } from "react-router-dom";
 import type { Product, AppContext } from "../types";
 
 interface HomeProps {
@@ -33,7 +34,7 @@ const Home: FC<HomeProps> = () => {
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
                 <Container className="nav-container py-3">
                     <Navbar.Brand>
-                        Product List
+                        ScandiProd
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
@@ -52,15 +53,17 @@ const Home: FC<HomeProps> = () => {
                             </Button>
                         ) }
 
-                        <Button>
-                            <PlusIcon />
-                            <span>
-                                Add 
-                                <span className="ms-1 d-none d-lg-block">
-                                    New Product
-                                </span> 
-                            </span>
-                        </Button>
+                        <Link to={'/add-product'}>
+                            <Button>
+                                <PlusIcon />
+                                <span>
+                                    Add 
+                                    <span className="ms-1 d-none d-lg-block">
+                                        New Product
+                                    </span> 
+                                </span>
+                            </Button>
+                        </Link>
                     </Nav>    
                 </Container>
             </Navbar>
