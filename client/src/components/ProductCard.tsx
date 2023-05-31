@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FC } from "react";
 import Card from "react-bootstrap/Card";
@@ -6,10 +7,12 @@ import type { Product } from "../types";
 
 interface ProductCardProps {
     data: Product;
+    isSelected: Function;
+    handleSelect: Function; 
 }
  
-const ProductCard: FC<ProductCardProps> = ({ data }) => {
-    const { sku, name, price } = data;
+const ProductCard: FC<ProductCardProps> = ({ data, isSelected, handleSelect }) => {
+    const { sku, name, price } = data as Product;
 
     // console.log(data);
 
@@ -19,6 +22,8 @@ const ProductCard: FC<ProductCardProps> = ({ data }) => {
                 <FormCheckInput 
                     type="checkbox"
                     className="delete-checkbox"
+                    checked={isSelected(sku)}
+                    onChange={() => handleSelect(sku)}
                 />
                 <Card.Text>
                     { sku }
