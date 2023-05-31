@@ -2,13 +2,16 @@
 import { FC } from "react";
 import Card from "react-bootstrap/Card";
 import FormCheckInput from "react-bootstrap/FormCheckInput"
+import type { Product } from "../types";
 
 interface ProductCardProps {
-    data?: object
+    data: Product;
 }
  
 const ProductCard: FC<ProductCardProps> = ({ data }) => {
-    { data }
+    const { sku, name, price } = data;
+
+    // console.log(data);
 
     return ( 
         <Card className="text-center">
@@ -18,13 +21,13 @@ const ProductCard: FC<ProductCardProps> = ({ data }) => {
                     className="delete-checkbox"
                 />
                 <Card.Text>
-                    PRODUCT-SKU-HERE
+                    { sku }
                 </Card.Text>
                 <Card.Title>
-                    Card Title
+                    { name }
                 </Card.Title>
                 <Card.Text>
-                    20.00
+                    { price }
                 </Card.Text>
                 <Card.Text>
                     Attribute: Value

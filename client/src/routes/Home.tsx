@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,12 +8,28 @@ import Button from "react-bootstrap/Button";
 import PlusIcon from "../icons/PlusIcon";
 import TrashIcon from "../icons/TrashIcon";
 import ProductCard from "../components/ProductCard";
+import axios from "axios";
+
+import type { Product } from "../types";
 
 interface HomeProps {
     
 }
- 
+
 const Home: FC<HomeProps> = () => {
+    const [products, setProducts] = useState<Product[]>();
+
+    useEffect(() => {
+        // Make GET request to retrieve products
+        axios.get('http://127.0.0.1:8000/products')
+        .then(response => {
+            setProducts(response.data.data);
+        })
+        .catch(error => {
+            console.error('Error retrieving products:', error);
+        });
+    }, []);
+
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
@@ -47,8 +63,8 @@ const Home: FC<HomeProps> = () => {
 
             <Container>
                 <Row lg="4" md="3" sm="2" xs="1">
-                    { Array.from({ length: 12 }).map((_, i) => (
-                        <ProductCard key={i} />
+                    { products && products.map((data, i) => (
+                        <ProductCard key={i} data={data} />
                     )) }
                 </Row>
             </Container>
