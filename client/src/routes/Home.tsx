@@ -32,9 +32,11 @@ const Home: FC<HomeProps> = () => {
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
-                <Container className="nav-container py-3" fluid="md">
+                <Container className="nav-container" fluid="md">
                     <Navbar.Brand>
-                        ScandiProd
+                        <Link to={'/'}>
+                            ScandiProd
+                        </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
@@ -56,7 +58,7 @@ const Home: FC<HomeProps> = () => {
                         <Link to={'/add-product'}>
                             <Button>
                                 <PlusIcon />
-                                <span>
+                                <span className="d-none d-sm-flex">
                                     Add 
                                     <span className="ms-1 d-none d-lg-block">
                                         New Product

@@ -15,7 +15,7 @@ const AddProduct: FC<AddProductProps> = () => {
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
-                <Container className="nav-container py-3" fluid="md">
+                <Container className="nav-container" fluid="md">
                     <Navbar.Brand>
                         <Link to={'/'}>
                             ScandiProd

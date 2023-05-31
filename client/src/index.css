@@ -5,6 +5,8 @@ body {
 }
 .nav-container {
     border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+    padding-top: .5rem;
+    padding-bottom: .5rem;
 }
 .navbar-brand {
     font-weight: 800;
@@ -25,7 +27,7 @@ body {
     user-select: none;
 }
 .btn svg {
-    width: 1.3rem;
+    width: 1.6rem;
 }
 .btn > span {
     display: flex;
