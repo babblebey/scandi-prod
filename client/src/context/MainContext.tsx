@@ -6,30 +6,49 @@ interface MainContextProviderProps {
     children: React.ReactElement
 }
 
+// Create Context
 export const MainContext = createContext({});
 
+// Create Context Provider
 export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) => {
     const [selectedProductSKUs, setSelectedProductSKUs] = useState<string[]>([]);
-    const [products, setProducts] = useState<Product[]>();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isProductsError, setIsProductsError] = useState<boolean>(false);
+    const [isProductsLoading, setIsProductsLoading] = useState<boolean>(false);
 
+    // Fetching All Products
     useEffect(() => {
-        // Make GET request to retrieve products
-        axios.get('http://127.0.0.1:8000/products')
-        .then(response => {
-            setProducts(response.data.data);
-        })
-        .catch(error => {
-            console.error('Error retrieving products:', error);
-        });
+        (async (): Promise<void> => {
+            try {
+                // Start Loading Products
+                setIsProductsLoading(true);
+
+                // Make GET request to retrieve Products
+                const response = await axios.get('http://127.0.0.1:8000/products');
+                const data = await response.data.data;
+
+                // Set Response data to Products
+                setProducts(data);
+
+                // Stop Loading Products
+                setIsProductsLoading(false);
+            } catch (error) {
+                // Set Error
+                setIsProductsError(true);
+                
+                // Stop Loading Products
+                setIsProductsLoading(false);
+                console.error('Error retrieving products: ', error);
+            }
+        })();
     }, []);
 
-    const handleDelete = (): void => {
-        axios.delete('http://127.0.0.1:8000/products', {
-            data: {
-                skus: selectedProductSKUs
-            }
-        })
-        .then(response => {
+    // Product Delete Handler
+    const handleDelete = async (): Promise<void> => {
+        try {
+            const config = { data: { skus: selectedProductSKUs } };
+            const response = await axios.delete('http://127.0.0.1:8000/products', config );
+            
             // If response is OK
             if (response.status === 200) {
                 // Filter delected products from products using selectedProductSKUs
@@ -45,10 +64,9 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
             } else {
                 throw new Error(response.data.error);
             }
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error deleting products:', error);
-        });
+        }
     }
 
     // Product Select Handler
@@ -81,7 +99,9 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
     return (
         <MainContext.Provider 
             value={{
-                products, setProducts,
+                products,
+                isProductsLoading,
+                isProductsError,
                 selectedProductSKUs, setSelectedProductSKUs,
                 handleDelete,
                 handleSelectProduct,
