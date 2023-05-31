@@ -32,7 +32,7 @@ const Home: FC<HomeProps> = () => {
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
-                <Container className="nav-container py-3">
+                <Container className="nav-container py-3" fluid="md">
                     <Navbar.Brand>
                         ScandiProd
                     </Navbar.Brand>
@@ -68,7 +68,7 @@ const Home: FC<HomeProps> = () => {
                 </Container>
             </Navbar>
 
-            <Container>
+            <Container fluid="md">
                 { isProductsLoading ? (
                     // Products is Loading - Render Spinner
                     <Row className="loading-wrapper justify-content-center align-content-center">
@@ -80,7 +80,7 @@ const Home: FC<HomeProps> = () => {
                         // Product Found Error - Render Alert
                         <Row className="error-wrapper justify-content-center align-content-center">
                             <Alert variant="danger">
-                                An error occured retrieving products!
+                                An error occured while retrieving products!
                             </Alert>
                         </Row>
                     ) : 
