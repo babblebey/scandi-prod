@@ -17,6 +17,7 @@ interface HomeProps {
 }
 
 const Home: FC<HomeProps> = () => {
+    const [selectedProductSKUs, setSelectedProductSKUs] = useState<string[]>([]);
     const [products, setProducts] = useState<Product[]>();
 
     useEffect(() => {
@@ -30,6 +31,35 @@ const Home: FC<HomeProps> = () => {
         });
     }, []);
 
+    // Product Select Handler
+    const handleSelectProduct = (sku: string): void => {
+        // Create a Copy
+        const updatedSelectedProductSKUs = [...selectedProductSKUs];
+
+        // Check if the productSKU is already selected - return the index in array or -1
+        const index = updatedSelectedProductSKUs.findIndex(
+            currentSelectedProductSKU => currentSelectedProductSKU === sku
+        );
+
+        // ProductSKU is 
+        if (index < 0) {
+            // ---not selected, add it to the selection
+            updatedSelectedProductSKUs.push(sku);
+        } else {
+            // ---already selected, remove it from the selection
+            updatedSelectedProductSKUs.splice(index, 1);
+        }
+        // Set New 
+        setSelectedProductSKUs(updatedSelectedProductSKUs);
+    }
+
+    // Check If Product is Seleted
+    const isSelected = (sku: string): boolean => {
+        return selectedProductSKUs.includes(sku);
+    }
+
+    // console.log(selectedProductSKUs);
+
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
@@ -39,15 +69,18 @@ const Home: FC<HomeProps> = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
-                        <Button variant="outline-danger" className="me-4 shadow">
-                            <TrashIcon />
-                            <span>
-                                Mass Delete 
-                                <span className="ms-1 d-none d-md-block">
-                                    Selected Products
-                                </span> 
-                            </span>
-                        </Button>
+                        { !!(selectedProductSKUs.length) && (
+                            <Button variant="outline-danger" className="me-4 shadow">
+                                <TrashIcon />
+                                <span>
+                                    Mass Delete 
+                                    <span className="ms-1 d-none d-md-block">
+                                        Selected Products
+                                    </span> 
+                                </span>
+                            </Button>
+                        ) }
+
                         <Button>
                             <PlusIcon />
                             <span>
@@ -64,7 +97,7 @@ const Home: FC<HomeProps> = () => {
             <Container>
                 <Row lg="4" md="3" sm="2" xs="1">
                     { products && products.map((data, i) => (
-                        <ProductCard key={i} data={data} />
+                        <ProductCard key={i} data={data} isSelected={isSelected} handleSelect={handleSelectProduct}/>
                     )) }
                 </Row>
             </Container>
