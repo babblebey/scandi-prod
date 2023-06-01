@@ -64,3 +64,9 @@ body {
     height: 20vh;
     margin: 0 .1rem;
 }
+#product_form > * {
+    margin-bottom: 1rem;
+}
+.input-group {
+    padding: 0;
+}
