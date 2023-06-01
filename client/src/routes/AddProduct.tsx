@@ -11,12 +11,20 @@ import InputGroup from "react-bootstrap/InputGroup";
 import CheckIcon from "../icons/CheckIcon";
 import CancelIcon from "../icons/CancelIcon";
 import { Link } from "react-router-dom";
+import type { FormEvent } from 'react';
 
 interface AddProductProps {
     
 }
  
 const AddProduct: FC<AddProductProps> = () => {
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+
+        // Testing Submit Action
+        console.log('Form Submitted!');   
+    }
+
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
@@ -39,7 +47,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                 </span>
                             </Button>
                         </Link>
-                        <Button>
+                        <Button form="product_form" type="submit">
                             <CheckIcon />
                             <span>
                                 Save
@@ -50,7 +58,7 @@ const AddProduct: FC<AddProductProps> = () => {
             </Navbar>
 
             <Container fluid="md">
-                <Form id="product_form" className="px-2">
+                <Form id="product_form" className="px-2" onSubmit={(e) => handleSubmit(e)}>
                     {/* Product SKU */}
                     <Row>
                         <Form.Label htmlFor="sku">SKU</Form.Label>
