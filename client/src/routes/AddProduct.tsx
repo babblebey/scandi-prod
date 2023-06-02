@@ -89,6 +89,7 @@ const AddProduct: FC<AddProductProps> = () => {
                             <InputGroup.Text>$</InputGroup.Text>
                             <Form.Control
                                 type="number"
+                                min={0}
                                 id="price"
                                 aria-label="Product Amount (in dollars)"
                             />
@@ -118,6 +119,7 @@ const AddProduct: FC<AddProductProps> = () => {
                             <InputGroup>
                                 <Form.Control
                                     type="number"
+                                    min={0}
                                     id="weight"
                                     aria-label="Book Weight (in kilograms)"
                                     aria-describedby="weightDescriptionBlock"
@@ -137,6 +139,7 @@ const AddProduct: FC<AddProductProps> = () => {
                             <InputGroup>
                                 <Form.Control
                                     type="number"
+                                    min={0}
                                     id="size"
                                     aria-label="DVD Size (in megabytes)"
                                     aria-describedby="sizeDescriptionBlock"
@@ -161,6 +164,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                         </InputGroup.Text>
                                         <Form.Control
                                             type="number"
+                                            min={0}
                                             id="height"
                                             aria-label="Furniture Height"
                                             aria-describedby="heightDescriptionBlock"
@@ -174,6 +178,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                         </InputGroup.Text>
                                         <Form.Control
                                             type="number"
+                                            min={0}
                                             id="width"
                                             aria-label="Furniture Width"
                                             aria-describedby="widthDescriptionBlock"
@@ -187,6 +192,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                         </InputGroup.Text>
                                         <Form.Control
                                             type="number"
+                                            min={0}
                                             id="length"
                                             aria-label="Furniture Length"
                                             aria-describedby="lengthDescriptionBlock"
