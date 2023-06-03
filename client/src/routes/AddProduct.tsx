@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { FC, useState } from 'react';
+import { FC, useState, useContext } from 'react';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,8 +12,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 import CheckIcon from "../icons/CheckIcon";
 import CancelIcon from "../icons/CancelIcon";
 import { Link } from "react-router-dom";
+import { MainContext } from "../context/MainContext";
 import type { FormEvent, ChangeEvent } from 'react';
 import type { ProductType } from "../types/Product";
+import type { Product, AppContext } from "../types";
 
 interface AddProductProps {
     
@@ -20,12 +23,31 @@ interface AddProductProps {
  
 const AddProduct: FC<AddProductProps> = () => {
     const [productType, setProductType] = useState<ProductType>();
+    const [isSKU, setIsSKU] = useState<{valid: boolean|undefined, invalid: boolean|undefined}>({
+        valid: undefined, invalid: undefined
+    });
+    const { products } = useContext(MainContext) as AppContext;
 
-    const handleSubmit = (e: FormEvent) => {
+    const validateSKU = (sku: string) => {
+        if (!sku.length) return;
+
+        if (products.some((product: Product) => product.sku.toLowerCase() === sku.trim().toLowerCase())) {
+            setIsSKU({valid: false, invalid: true});
+            return false; 
+        }
+
+        setIsSKU({valid: true, invalid: false});
+        return true;
+    }
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        // Testing Submit Action
-        console.log('Form Submitted!');
+        
+        const form = e.target as HTMLFormElement;
+        if (validateSKU(form.sku.value)) {
+            // Testing Submit Action
+            console.log('Form Submitted!');
+        }
     }
 
     return ( 
@@ -68,8 +90,18 @@ const AddProduct: FC<AddProductProps> = () => {
                         <Form.Control
                             type="text"
                             id="sku"
+                            required
                             aria-label="Product SKU"
+                            isInvalid={isSKU.invalid}
+                            isValid={isSKU.valid}
+                            onBlur={e => validateSKU(e.target.value)}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            This SKU already exist for another product, please enter a different SKU
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback type="valid">
+                            SKU looks good!
+                        </Form.Control.Feedback>
                     </Row>
 
                     {/* Product Name */}
@@ -78,6 +110,7 @@ const AddProduct: FC<AddProductProps> = () => {
                         <Form.Control
                             type="text"
                             id="name"
+                            required
                             aria-label="Product Name"
                         />
                     </Row>
@@ -91,6 +124,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                 type="number"
                                 min={0}
                                 id="price"
+                                required
                                 aria-label="Product Amount (in dollars)"
                             />
                         </InputGroup>
@@ -104,6 +138,8 @@ const AddProduct: FC<AddProductProps> = () => {
                             onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                 setProductType(e.target.value as ProductType)
                             } }
+                            required
+                            aria-label="Product Type"
                         >
                             <option value="" disabled>Select Product Type</option>
                             <option value="Book">Book</option>
@@ -121,6 +157,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                     type="number"
                                     min={0}
                                     id="weight"
+                                    required
                                     aria-label="Book Weight (in kilograms)"
                                     aria-describedby="weightDescriptionBlock"
                                 />
@@ -141,6 +178,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                     type="number"
                                     min={0}
                                     id="size"
+                                    required
                                     aria-label="DVD Size (in megabytes)"
                                     aria-describedby="sizeDescriptionBlock"
                                 />
@@ -166,6 +204,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                             type="number"
                                             min={0}
                                             id="height"
+                                            required
                                             aria-label="Furniture Height"
                                             aria-describedby="heightDescriptionBlock"
                                         />
@@ -180,6 +219,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                             type="number"
                                             min={0}
                                             id="width"
+                                            required
                                             aria-label="Furniture Width"
                                             aria-describedby="widthDescriptionBlock"
                                             />
@@ -194,6 +234,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                             type="number"
                                             min={0}
                                             id="length"
+                                            required
                                             aria-label="Furniture Length"
                                             aria-describedby="lengthDescriptionBlock"
                                         />
