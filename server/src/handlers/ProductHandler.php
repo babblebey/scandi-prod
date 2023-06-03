@@ -97,7 +97,7 @@ class ProductHandler implements ProductHandlerInterface {
         try {
             $localInsertStmt = $this->db->prepare($localInsertQuery);
             $localInsertStmt->execute([
-                'sku' => $product->getSKU(),
+                'sku' => strtoupper($product->getSKU()),
                 'name' => $product->getName(),
                 'price' =>  $product->getPrice(),
                 'type' =>  $type
@@ -105,7 +105,7 @@ class ProductHandler implements ProductHandlerInterface {
             
             $productInsertStmt = $this->db->prepare($productInsertQuery);
             $productInsertStmt->execute([
-                'sku' => $product->getSKU(),
+                'sku' => strtoupper($product->getSKU()),
                 $productAttributeKey => $productAttribute[$productAttributeKey]
             ]);
             return $localInsertStmt->rowCount();
