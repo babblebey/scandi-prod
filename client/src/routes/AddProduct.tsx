@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { MainContext } from "../context/MainContext";
 import type { FormEvent, ChangeEvent } from 'react';
 import type { ProductType } from "../types/Product";
-import type { Product, AppContext } from "../types";
+import type { AppContext } from "../types";
 
 interface AddProductProps {
     
@@ -23,22 +23,7 @@ interface AddProductProps {
  
 const AddProduct: FC<AddProductProps> = () => {
     const [productType, setProductType] = useState<ProductType>();
-    const [isSKU, setIsSKU] = useState<{valid: boolean|undefined, invalid: boolean|undefined}>({
-        valid: undefined, invalid: undefined
-    });
-    const { products } = useContext(MainContext) as AppContext;
-
-    const validateSKU = (sku: string) => {
-        if (!sku.length) return;
-
-        if (products.some((product: Product) => product.sku.toLowerCase() === sku.trim().toLowerCase())) {
-            setIsSKU({valid: false, invalid: true});
-            return false; 
-        }
-
-        setIsSKU({valid: true, invalid: false});
-        return true;
-    }
+    const { validateSKU, isSKU } = useContext(MainContext) as AppContext;
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

@@ -7,5 +7,12 @@ export default interface AppContext {
     isProductsError: boolean,
     isSelected: (sku: string) => boolean, 
     handleSelectProduct: (sku: string) => void, 
-    handleDelete: () => void
+    handleDelete: () => void,
+    isSKU: IsSKUValid,
+    validateSKU: (sku: string) => boolean
+}
+
+export interface IsSKUValid {
+    valid: boolean|undefined, 
+    invalid: boolean|undefined
 }

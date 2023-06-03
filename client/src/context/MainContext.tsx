@@ -1,6 +1,7 @@
 import { FC, useState, useEffect, createContext } from "react";
 import axios from "axios";
 import type { Product } from "../types";
+import type { IsSKUValid } from "../types/AppContext";
 
 interface MainContextProviderProps {
     children: React.ReactElement
@@ -15,6 +16,9 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
     const [products, setProducts] = useState<Product[]>([]);
     const [isProductsError, setIsProductsError] = useState<boolean>(false);
     const [isProductsLoading, setIsProductsLoading] = useState<boolean>(false);
+    const [isSKU, setIsSKU] = useState<IsSKUValid>({
+        valid: undefined, invalid: undefined
+    });
 
     // Fetching All Products
     useEffect(() => {
@@ -96,6 +100,22 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
         return selectedProductSKUs.includes(sku);
     }
 
+    // Product SKU Validation
+    const validateSKU = (sku: string): void|boolean => {
+        // If no value is in SKU
+        if (!sku.length) return;
+
+        // If SKU Value is already exist in another product - set invalid and return false
+        if (products.some((product: Product) => product.sku.toLowerCase() === sku.trim().toLowerCase())) {
+            setIsSKU({valid: false, invalid: true});
+            return false; 
+        }
+
+        // SKUis unique - set valid and return true
+        setIsSKU({valid: true, invalid: false});
+        return true;
+    }
+
     return (
         <MainContext.Provider 
             value={{
@@ -106,6 +126,8 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
                 handleDelete,
                 handleSelectProduct,
                 isSelected,
+                isSKU,
+                validateSKU
             }}
         >
             { children }
