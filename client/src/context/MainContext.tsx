@@ -122,11 +122,11 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
                 products,
                 isProductsLoading,
                 isProductsError,
-                selectedProductSKUs, setSelectedProductSKUs,
+                selectedProductSKUs,
                 handleDelete,
                 handleSelectProduct,
                 isSelected,
-                isSKU,
+                isSKU, setIsSKU,
                 validateSKU
             }}
         >

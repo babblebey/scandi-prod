@@ -11,7 +11,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import CheckIcon from "../icons/CheckIcon";
 import CancelIcon from "../icons/CancelIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../context/MainContext";
 import type { FormEvent, ChangeEvent } from 'react';
 import type { ProductType } from "../types/Product";
@@ -23,7 +23,8 @@ interface AddProductProps {
  
 const AddProduct: FC<AddProductProps> = () => {
     const [productType, setProductType] = useState<ProductType>();
-    const { validateSKU, isSKU } = useContext(MainContext) as AppContext;
+    const { validateSKU, isSKU, setIsSKU } = useContext(MainContext) as AppContext;
+    const navigate = useNavigate();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -49,14 +50,17 @@ const AddProduct: FC<AddProductProps> = () => {
                         Add New Product
                     </Nav>
                     <Nav>
-                        <Link to={'/'}>
-                            <Button variant="danger" className="me-4">
-                                <CancelIcon />
-                                <span className="d-none d-md-flex">
-                                    Cancel
-                                </span>
-                            </Button>
-                        </Link>
+                        <Button form="product_form" type="reset" variant="danger" className="me-4"
+                            onClick={() => {
+                                setIsSKU({valid: undefined, invalid: undefined});
+                                navigate('/');
+                            }}
+                        >
+                            <CancelIcon />
+                            <span className="d-none d-md-flex">
+                                Cancel
+                            </span>
+                        </Button>
                         <Button form="product_form" type="submit">
                             <CheckIcon />
                             <span>
