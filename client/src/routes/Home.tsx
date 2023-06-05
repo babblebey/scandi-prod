@@ -70,7 +70,7 @@ const Home: FC<HomeProps> = () => {
                 </Container>
             </Navbar>
 
-            <Container fluid="md">
+            <Container fluid="md" className="main">
                 { isProductsLoading ? (
                     // Products is Loading - Render Spinner
                     <Row className="loading-wrapper justify-content-center align-content-center">

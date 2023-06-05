@@ -16,6 +16,9 @@ body {
 .navbar-brand a, .navbar-nav a {
     text-decoration: none;
 }
+.main {
+    padding-bottom: 2rem;
+}
 @media (max-width: 424px) {
     .navbar-nav {
         position: fixed;
@@ -26,6 +29,9 @@ body {
         background: #ffffff;
         padding: .5rem 0;
         border-top: 1px solid rgba(0, 0, 0, 0.175);
+    }
+    .main {
+        padding-bottom: 5rem;
     }
 }
 .btn, .card-body {

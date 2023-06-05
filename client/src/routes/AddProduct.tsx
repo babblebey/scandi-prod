@@ -70,7 +70,7 @@ const AddProduct: FC<AddProductProps> = () => {
                 </Container>
             </Navbar>
 
-            <Container fluid="md">
+            <Container fluid="md" className="main">
                 <Form id="product_form" className="px-2" onSubmit={(e) => handleSubmitProduct(e)}>
                     {/* Product SKU */}
                     <Row>
