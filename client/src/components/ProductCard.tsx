@@ -3,6 +3,7 @@ import { FC } from "react";
 import Card from "react-bootstrap/Card";
 import FormCheckInput from "react-bootstrap/FormCheckInput"
 import type { Product } from "../types";
+import type { AttributeObject } from "../types/Product";
 
 interface ProductCardProps {
     data: Product;
@@ -11,9 +12,12 @@ interface ProductCardProps {
 }
  
 const ProductCard: FC<ProductCardProps> = ({ data, isSelected, handleSelect }) => {
-    const { sku, name, price } = data as Product;
+    const { sku, name, price, attribute } = data as Product;
+    const attributeKey = Object.keys(attribute).toString();
 
-    // console.log(data);
+    const capitalise = (string: string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
 
     return ( 
         <Card className="text-center">
@@ -34,7 +38,8 @@ const ProductCard: FC<ProductCardProps> = ({ data, isSelected, handleSelect }) =
                     { price }
                 </Card.Text>
                 <Card.Text>
-                    Attribute: Value
+                    { capitalise(attributeKey) }
+                    : { attribute[attributeKey as keyof AttributeObject] }
                 </Card.Text>
             </Card.Body>
         </Card>
