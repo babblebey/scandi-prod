@@ -29,6 +29,8 @@ const Home: FC<HomeProps> = () => {
         handleDelete 
     } = useContext(MainContext) as AppContext;
 
+    const isProductSelected = !!(selectedProductSKUs.length);
+
     return ( 
         <>
             <Navbar bg="white" className="mb-3 py-0" sticky="top">
@@ -40,20 +42,22 @@ const Home: FC<HomeProps> = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
-                        { !!(selectedProductSKUs.length) && (
-                            // Render Delete Button when a Product is selected
-                            <Button variant="danger" className="me-4"
-                                onClick={() => handleDelete()}
-                            >
-                                <TrashIcon />
-                                <span>
-                                    Mass Delete 
+                        {/* Delete Button - disabled when no product is selected and enable when selected */}
+                        <Button variant="danger" className="me-4"
+                            onClick={() => handleDelete()}
+                            disabled={!isProductSelected}
+                        >
+                            <TrashIcon />
+                            <span>
+                                Mass Delete 
+                                {/* Display Extra text when a Product is Selected - on large screen only */}
+                                { isProductSelected && (
                                     <span className="ms-1 d-none d-lg-block">
-                                        Selected Products
+                                        Selected Product(s)
                                     </span> 
-                                </span>
-                            </Button>
-                        ) }
+                                ) }
+                            </span>
+                        </Button>
 
                         <Link to={'/add-product'}>
                             <Button>
