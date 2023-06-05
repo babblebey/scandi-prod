@@ -20,4 +20,4 @@ export type AttributeObject = {
     dimension: string;
     weight?: undefined;
     size?: undefined;
-} | null
+} | object

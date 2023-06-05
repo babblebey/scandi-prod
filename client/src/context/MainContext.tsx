@@ -132,7 +132,7 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
             type === 'Book' ? { weight: attribute } :
             type === 'DVD' ? { size: attribute } :
             type === 'Furniture' ? { dimension: attribute } :
-            null
+            {}
         );
 
         // Validate SKU - Exit Submission If SKU is Invalid
