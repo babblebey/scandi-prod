@@ -116,6 +116,64 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
         return true;
     }
 
+    const handleSubmit = async (form: HTMLFormElement, callback: () => void): Promise<void> => {
+        // Extract Form Fields
+        const sku: string = form['sku'].value;
+        const name: string = form['name'].value;
+        const price = Number(form['price'].value);
+        const type = form['productType'].value;
+        const attribute: string = (
+            type === 'Book' ? form['weight'].value :
+            type === 'DVD' ? form['size'].value :
+            type === 'Furniture' ? `${form['height'].value}x${form['width'].value}x${form['length'].value}` :
+            null
+        );
+        const attrObj = (
+            type === 'Book' ? { weight: attribute } :
+            type === 'DVD' ? { size: attribute } :
+            type === 'Furniture' ? { dimension: attribute } :
+            null
+        );
+
+        // Validate SKU - Exit Submission If SKU is Invalid
+        if (!validateSKU(sku)) {
+            return;
+        }
+        
+        try {
+            // Build Data
+            const data = { sku, name, price, type, attribute };
+
+            // Post Data to Endpoint
+            const response = await axios.post('http://127.0.0.1:8000/products', data);
+
+            // If response is right - 201 Created
+            if (response.status === 201) {
+                const newProduct = {
+                    sku: sku.toUpperCase(), 
+                    name,
+                    price,
+                    type,
+                    attribute: attrObj
+                } as Product;
+
+                // Reset Form SKU validity fields
+                setIsSKU({valid: undefined, invalid: undefined});
+
+                // Add Products to Client-side product list
+                setProducts([...products, newProduct]);
+
+                // Run Callback function - e.g. Routing callback
+                callback();
+            } else {
+                // Throw error if response isn't 201
+                throw new Error(response.data.error)
+            }
+        } catch (error) {
+            console.error('Error adding product:', error)
+        }
+    }
+
     return (
         <MainContext.Provider 
             value={{
@@ -127,7 +185,8 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
                 handleSelectProduct,
                 isSelected,
                 isSKU, setIsSKU,
-                validateSKU
+                validateSKU,
+                handleSubmit
             }}
         >
             { children }

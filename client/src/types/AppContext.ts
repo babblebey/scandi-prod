@@ -2,7 +2,7 @@ import type Product from "./Product"
 import type { SetStateAction } from "react";
 
 export default interface AppContext {
-    products: Product[], 
+    products: Product[],
     selectedProductSKUs: string[], 
     isProductsLoading: boolean,
     isProductsError: boolean,
@@ -11,7 +11,8 @@ export default interface AppContext {
     handleDelete: () => void,
     isSKU: IsSKUValid,
     setIsSKU: (value: SetStateAction<IsSKUValid>) => void,
-    validateSKU: (sku: string) => boolean
+    validateSKU: (sku: string) => boolean,
+    handleSubmit: (form: HTMLFormElement, callback: () => void) => void
 }
 
 export interface IsSKUValid {

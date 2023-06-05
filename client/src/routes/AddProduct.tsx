@@ -13,10 +13,9 @@ import CheckIcon from "../icons/CheckIcon";
 import CancelIcon from "../icons/CancelIcon";
 import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../context/MainContext";
-import axios from "axios";
 import type { FormEvent, ChangeEvent } from 'react';
 import type { ProductType } from "../types/Product";
-import type { AppContext, Product } from "../types";
+import type { AppContext } from "../types";
 
 interface AddProductProps {
     
@@ -24,58 +23,16 @@ interface AddProductProps {
  
 const AddProduct: FC<AddProductProps> = () => {
     const [productType, setProductType] = useState<ProductType>();
-    const { products, setProducts, validateSKU, isSKU, setIsSKU } = useContext(MainContext) as AppContext;
+    const { validateSKU, isSKU, setIsSKU, handleSubmit } = useContext(MainContext) as AppContext;
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: FormEvent): Promise<void> => {
+    const handleSubmitProduct = (e: FormEvent) => {
+        // Stop Page Reloading
         e.preventDefault();
         const form = e.target as HTMLFormElement;
 
-        const sku: string = form['sku'].value;
-        const name: string = form['name'].value;
-        const price = Number(form['price'].value);
-        const type = form['productType'].value;
-        const attribute: string = (
-            productType === 'Book' ? form['weight'].value :
-            productType === 'DVD' ? form['size'].value :
-            productType === 'Furniture' ? `${form['height'].value}x${form['width'].value}x${form['length'].value}` :
-            null
-        );
-        const attrObj = (
-            productType === 'Book' ? { weight: attribute } :
-            productType === 'DVD' ? { size: attribute } :
-            productType === 'Furniture' ? { dimension: attribute } :
-            null
-        );
-
-        if (!validateSKU(sku)) {
-            // Testing Submit Action
-            return;
-        }
-        
-        try {
-            const data = { sku, name, price, type, attribute };
-            console.log(data);
-
-            const response = await axios.post('http://127.0.0.1:8000/products', data);
-
-            if (response.status === 201) {
-                const newProduct = {
-                    sku: sku.toUpperCase(), 
-                    name,
-                    price,
-                    type,
-                    attribute: attrObj
-                } as Product;
-                setIsSKU({valid: undefined, invalid: undefined});
-                setProducts([...products, newProduct]);
-                navigate('/');
-            } else {
-                throw new Error(response.data.error)
-            }
-        } catch (error) {
-            console.error('Error adding product:', error)
-        }
+        // Call Submit Handler -> Then Run Navigation Callback; route to products list on product addition
+        handleSubmit(form, () => navigate('/'));
     }
 
     return ( 
@@ -114,7 +71,7 @@ const AddProduct: FC<AddProductProps> = () => {
             </Navbar>
 
             <Container fluid="md">
-                <Form id="product_form" className="px-2" onSubmit={(e) => handleSubmit(e)}>
+                <Form id="product_form" className="px-2" onSubmit={(e) => handleSubmitProduct(e)}>
                     {/* Product SKU */}
                     <Row>
                         <Form.Label htmlFor="sku">SKU</Form.Label>
