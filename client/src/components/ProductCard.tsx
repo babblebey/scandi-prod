@@ -45,7 +45,7 @@ const ProductCard: FC<ProductCardProps> = ({ data, isSelected, handleSelect }) =
                     { name }
                 </Card.Title>
                 <Card.Text>
-                    { price }
+                    {'$' + price }
                 </Card.Text>
                 <Card.Text>
                     { capitalise(attributeKey) }
