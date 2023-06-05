@@ -20,6 +20,9 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
         valid: undefined, invalid: undefined
     });
 
+    // Products Endoint URL
+    const resourseURL = 'http://127.0.0.1:8000/products'; 
+
     // Fetching All Products
     useEffect(() => {
         (async (): Promise<void> => {
@@ -28,7 +31,7 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
                 setIsProductsLoading(true);
 
                 // Make GET request to retrieve Products
-                const response = await axios.get('http://127.0.0.1:8000/products');
+                const response = await axios.get(resourseURL);
                 const data = await response.data.data;
 
                 // Set Response data to Products
@@ -51,7 +54,7 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
     const handleDelete = async (): Promise<void> => {
         try {
             const config = { data: { skus: selectedProductSKUs } };
-            const response = await axios.delete('http://127.0.0.1:8000/products', config );
+            const response = await axios.delete(resourseURL, config );
             
             // If response is OK
             if (response.status === 200) {
@@ -145,7 +148,7 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
             const data = { sku, name, price, type, attribute };
 
             // Post Data to Endpoint
-            const response = await axios.post('http://127.0.0.1:8000/products', data);
+            const response = await axios.post(resourseURL, data);
 
             // If response is right - 201 Created
             if (response.status === 201) {
