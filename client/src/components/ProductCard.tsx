@@ -12,9 +12,19 @@ interface ProductCardProps {
 }
  
 const ProductCard: FC<ProductCardProps> = ({ data, isSelected, handleSelect }) => {
-    const { sku, name, price, attribute } = data as Product;
+    const { sku, name, price, attribute, type } = data as Product;
+
+    // Extract Product Attribute Key
     const attributeKey = Object.keys(attribute).toString();
 
+    // Assigning Unit to Type
+    const unit = (
+        type === 'Book' ? 'KG' :
+        type === 'DVD' ? 'MB' :
+        ''
+    );
+
+    // Capitalise String Helper Function
     const capitalise = (string: string) => {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
@@ -39,7 +49,7 @@ const ProductCard: FC<ProductCardProps> = ({ data, isSelected, handleSelect }) =
                 </Card.Text>
                 <Card.Text>
                     { capitalise(attributeKey) }
-                    : { attribute[attributeKey as keyof AttributeObject] }
+                    : { attribute[attributeKey as keyof AttributeObject] +' '+ unit }
                 </Card.Text>
             </Card.Body>
         </Card>
