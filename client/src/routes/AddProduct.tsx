@@ -14,25 +14,39 @@ import CancelIcon from "../icons/CancelIcon";
 import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../context/MainContext";
 import type { FormEvent, ChangeEvent } from 'react';
-import type { ProductType } from "../types/Product";
-import type { AppContext } from "../types";
+import type { AppContext, ProductFormInput } from "../types";
 
 interface AddProductProps {
     
 }
  
 const AddProduct: FC<AddProductProps> = () => {
-    const [productType, setProductType] = useState<ProductType>();
     const { validateSKU, isSKU, setIsSKU, handleSubmit } = useContext(MainContext) as AppContext;
     const navigate = useNavigate();
+    const [formInput, setFormInput] = useState<ProductFormInput>({
+        sku: '',
+        name: '',
+        price: '',
+        productType: '',
+        weight: '',
+        size: '',
+        height: '',
+        width: '',
+        length: '',
+    });
 
     const handleSubmitProduct = (e: FormEvent) => {
         // Stop Page Reloading
         e.preventDefault();
-        const form = e.target as HTMLFormElement;
 
         // Call Submit Handler -> Then Run Navigation Callback; route to products list on product addition
-        handleSubmit(form, () => navigate('/'));
+        handleSubmit(formInput, () => navigate('/'));
+    }
+
+    // Form Change Handler
+    const handleChange = (e: ChangeEvent, value: any) => {
+        const field = e.target.id;
+        setFormInput({ ...formInput, [field]: value });
     }
 
     return ( 
@@ -79,9 +93,11 @@ const AddProduct: FC<AddProductProps> = () => {
                             type="text"
                             id="sku"
                             required
+                            value={formInput?.sku}
                             aria-label="Product SKU"
                             isInvalid={isSKU.invalid}
                             isValid={isSKU.valid}
+                            onChange={e => handleChange(e, e.target.value)}
                             onBlur={e => validateSKU(e.target.value)}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -99,7 +115,9 @@ const AddProduct: FC<AddProductProps> = () => {
                             type="text"
                             id="name"
                             required
+                            value={formInput?.name}
                             aria-label="Product Name"
+                            onChange={e => handleChange(e, e.target.value)}
                         />
                     </Row>
 
@@ -114,7 +132,9 @@ const AddProduct: FC<AddProductProps> = () => {
                                 step={0.01}
                                 id="price"
                                 required
+                                value={formInput?.price}
                                 aria-label="Product Amount (in dollars)"
+                                onChange={e => handleChange(e, e.target.value)}
                             />
                         </InputGroup>
                     </Row>
@@ -124,9 +144,7 @@ const AddProduct: FC<AddProductProps> = () => {
                         <Form.Label htmlFor="productType">Product Type</Form.Label>
                         <Form.Select id="productType" 
                             defaultValue="" 
-                            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                setProductType(e.target.value as ProductType)
-                            } }
+                            onChange={(e) => setFormInput({ ...formInput, productType: e.target.value })}
                             required
                             aria-label="Product Type"
                         >
@@ -137,8 +155,8 @@ const AddProduct: FC<AddProductProps> = () => {
                         </Form.Select>
                     </Row>
 
-                    {/* Attribute for ProductType - Book */}
-                    { (productType === "Book") && (
+                    {/* Attribute for formInput?.productType - Book */}
+                    { (formInput?.productType === "Book") && (
                         <Row>
                             <Form.Label htmlFor="weight">Weight</Form.Label>
                             <InputGroup>
@@ -147,8 +165,10 @@ const AddProduct: FC<AddProductProps> = () => {
                                     min={0}
                                     id="weight"
                                     required
+                                    value={formInput?.weight}
                                     aria-label="Book Weight (in kilograms)"
                                     aria-describedby="weightDescriptionBlock"
+                                    onChange={e => handleChange(e, e.target.value)}
                                 />
                                 <InputGroup.Text>Kilograms (KG)</InputGroup.Text>
                             </InputGroup>
@@ -158,8 +178,8 @@ const AddProduct: FC<AddProductProps> = () => {
                         </Row>
                     ) }
                     
-                    {/* Attribute for ProductType - DVD */}
-                    { (productType === "DVD") && (
+                    {/* Attribute for formInput?.productType - DVD */}
+                    { (formInput?.productType === "DVD") && (
                         <Row>
                             <Form.Label htmlFor="size">Size</Form.Label>
                             <InputGroup>
@@ -168,8 +188,10 @@ const AddProduct: FC<AddProductProps> = () => {
                                     min={0}
                                     id="size"
                                     required
+                                    value={formInput?.size}
                                     aria-label="DVD Size (in megabytes)"
                                     aria-describedby="sizeDescriptionBlock"
+                                    onChange={e => handleChange(e, e.target.value)}
                                 />
                                 <InputGroup.Text>Megabytes (MB)</InputGroup.Text>
                             </InputGroup>
@@ -179,8 +201,8 @@ const AddProduct: FC<AddProductProps> = () => {
                         </Row>
                     ) }
 
-                    {/* Attribute for ProductType - Furniture */}
-                    { (productType === "Furniture") && (
+                    {/* Attribute for formInput?.productType - Furniture */}
+                    { (formInput?.productType === "Furniture") && (
                         <Row>
                             <Form.Label htmlFor="size">Dimension</Form.Label>
                             <Row lg="3" md="2" sm="1" xs="1" className="p-0 m-0">
@@ -194,8 +216,10 @@ const AddProduct: FC<AddProductProps> = () => {
                                             min={0}
                                             id="height"
                                             required
+                                            value={formInput?.height}
                                             aria-label="Furniture Height"
                                             aria-describedby="heightDescriptionBlock"
+                                            onChange={e => handleChange(e, e.target.value)}
                                         />
                                     </InputGroup>
                                 </Col>
@@ -209,8 +233,10 @@ const AddProduct: FC<AddProductProps> = () => {
                                             min={0}
                                             id="width"
                                             required
+                                            value={formInput?.width}
                                             aria-label="Furniture Width"
                                             aria-describedby="widthDescriptionBlock"
+                                            onChange={e => handleChange(e, e.target.value)}
                                             />
                                     </InputGroup>
                                 </Col>
@@ -224,8 +250,10 @@ const AddProduct: FC<AddProductProps> = () => {
                                             min={0}
                                             id="length"
                                             required
+                                            value={formInput?.length}
                                             aria-label="Furniture Length"
                                             aria-describedby="lengthDescriptionBlock"
+                                            onChange={e => handleChange(e, e.target.value)}
                                         />
                                     </InputGroup>
                                 </Col>
