@@ -1,5 +1,6 @@
 import type Product from "./Product"
 import type { SetStateAction } from "react";
+import type ProductFormInput from "./ProductFormInput";
 
 export default interface AppContext {
     products: Product[],
@@ -12,7 +13,7 @@ export default interface AppContext {
     isSKU: IsSKUValid,
     setIsSKU: (value: SetStateAction<IsSKUValid>) => void,
     validateSKU: (sku: string) => boolean,
-    handleSubmit: (form: HTMLFormElement, callback: () => void) => void
+    handleSubmit: (form: ProductFormInput, callback: () => void) => void
 }
 
 export interface IsSKUValid {

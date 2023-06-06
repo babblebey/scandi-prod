@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, createContext } from "react";
 import axios from "axios";
-import type { Product } from "../types";
+import type { Product, ProductFormInput } from "../types";
 import type { IsSKUValid } from "../types/AppContext";
 
 interface MainContextProviderProps {
@@ -106,7 +106,7 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
     // Product SKU Validation
     const validateSKU = (sku: string): void|boolean => {
         // If no value is in SKU
-        if (!sku.length) return;
+        if (!sku.length) return false;
 
         // If SKU Value is already exist in another product - set invalid and return false
         if (products.some((product: Product) => product.sku.toLowerCase() === sku.trim().toLowerCase())) {
@@ -119,16 +119,16 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
         return true;
     }
 
-    const handleSubmit = async (form: HTMLFormElement, callback: () => void): Promise<void> => {
+    const handleSubmit = async (form: ProductFormInput, callback: () => void): Promise<void> => {
         // Extract Form Fields
-        const sku: string = form['sku'].value;
-        const name: string = form['name'].value;
-        const price = Number(form['price'].value);
-        const type = form['productType'].value;
-        const attribute: string = (
-            type === 'Book' ? form['weight'].value :
-            type === 'DVD' ? form['size'].value :
-            type === 'Furniture' ? `${form['height'].value}x${form['width'].value}x${form['length'].value}` :
+        const sku = form['sku'];
+        const name = form['name'];
+        const price = Number(form['price']);
+        const type = form['productType'];
+        const attribute = (
+            type === 'Book' ? form['weight'] :
+            type === 'DVD' ? form['size'] :
+            type === 'Furniture' ? `${form['height']}x${form['width']}x${form['length']}` :
             null
         );
         const attrObj = (
