@@ -21,15 +21,12 @@ interface HomeProps {
 const Home: FC<HomeProps> = () => {
     const { 
         products, 
-        selectedProductSKUs, 
         isProductsLoading, 
         isProductsError,
         isSelected, 
         handleSelectProduct, 
         handleDelete 
     } = useContext(MainContext) as AppContext;
-
-    const isProductSelected = !!(selectedProductSKUs.length);
 
     return ( 
         <>
@@ -42,10 +39,9 @@ const Home: FC<HomeProps> = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Nav>
-                        {/* Delete Button - disabled when no product is selected and enable when selected */}
+                        {/* Delete Button */}
                         <Button variant="danger" className="me-4"
                             onClick={() => handleDelete()}
-                            disabled={!isProductSelected}
                         >
                             <TrashIcon />
                             <span>
