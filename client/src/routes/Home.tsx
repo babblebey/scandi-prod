@@ -49,7 +49,7 @@ const Home: FC<HomeProps> = () => {
                         >
                             <TrashIcon />
                             <span>
-                                Mass Delete 
+                                MASS DELETE 
                             </span>
                         </Button>
 
@@ -57,7 +57,7 @@ const Home: FC<HomeProps> = () => {
                             <Button>
                                 <PlusIcon />
                                 <span>
-                                    Add
+                                    ADD
                                 </span>
                             </Button>
                         </Link>
