@@ -20,8 +20,8 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
         valid: undefined, invalid: undefined
     });
 
-    // Products Endoint URL
-    const resourseURL = 'http://127.0.0.1:8000/products'; 
+    // Products Endpoint URL
+    const resourseURL = import.meta.env.VITE_RESOURCE_URL; 
 
     // Fetching All Products
     useEffect(() => {
@@ -48,7 +48,7 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
                 console.error('Error retrieving products: ', error);
             }
         })();
-    }, []);
+    }, [resourseURL]);
 
     // Product Delete Handler
     const handleDelete = async (): Promise<void> => {
