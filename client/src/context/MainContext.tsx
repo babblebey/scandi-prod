@@ -52,6 +52,9 @@ export const MainContextProvider: FC<MainContextProviderProps> = ({ children }) 
 
     // Product Delete Handler
     const handleDelete = async (): Promise<void> => {
+        // If No Product is Selected - Do not run delete
+        if (!(selectedProductSKUs.length)) return;
+
         try {
             const config = { data: { skus: selectedProductSKUs } };
             const response = await axios.delete(resourseURL, config );
