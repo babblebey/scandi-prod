@@ -50,23 +50,14 @@ const Home: FC<HomeProps> = () => {
                             <TrashIcon />
                             <span>
                                 Mass Delete 
-                                {/* Display Extra text when a Product is Selected - on large screen only */}
-                                { isProductSelected && (
-                                    <span className="ms-1 d-none d-lg-block">
-                                        Selected Product(s)
-                                    </span> 
-                                ) }
                             </span>
                         </Button>
 
                         <Link to={'/add-product'}>
                             <Button>
                                 <PlusIcon />
-                                <span className="d-none d-sm-flex">
-                                    Add 
-                                    <span className="ms-1 d-none d-lg-block">
-                                        New Product
-                                    </span> 
+                                <span>
+                                    Add
                                 </span>
                             </Button>
                         </Link>
