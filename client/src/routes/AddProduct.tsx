@@ -163,6 +163,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                 <Form.Control
                                     type="number"
                                     min={0}
+                                    step={0.01}
                                     id="weight"
                                     required
                                     value={formInput?.weight}
@@ -186,6 +187,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                 <Form.Control
                                     type="number"
                                     min={0}
+                                    step={0.01}
                                     id="size"
                                     required
                                     value={formInput?.size}
@@ -214,6 +216,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                         <Form.Control
                                             type="number"
                                             min={0}
+                                            step={0.01}
                                             id="height"
                                             required
                                             value={formInput?.height}
@@ -231,6 +234,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                         <Form.Control
                                             type="number"
                                             min={0}
+                                            step={0.01}
                                             id="width"
                                             required
                                             value={formInput?.width}
@@ -248,6 +252,7 @@ const AddProduct: FC<AddProductProps> = () => {
                                         <Form.Control
                                             type="number"
                                             min={0}
+                                            step={0.01}
                                             id="length"
                                             required
                                             value={formInput?.length}
