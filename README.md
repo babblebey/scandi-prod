@@ -26,6 +26,7 @@ Follow these steps to get the project up and running on your local machine:
    - Navigate to the `server` directory.
    - Configure your PHP server to serve the backend code.
    - Make sure to set up the necessary database connections and configurations.
+   - Import `db.sql` SQL dump file to populate database field and initial data.
 
 3. **Frontend Setup**:
    - Navigate to the `client` directory.
